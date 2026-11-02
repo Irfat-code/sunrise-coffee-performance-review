@@ -1,0 +1,173 @@
+table 'Monthly Profit'
+	lineageTag: 329609a9-cd9e-4ae6-bd74-44fa8dfcd7e9
+
+	column monthly_profit_id
+		dataType: int64
+		lineageTag: 68637ede-942c-4026-bfab-81bb977fc8ce
+		summarizeBy: none
+		sourceColumn: monthly_profit_id
+
+	column store_id
+		dataType: int64
+		lineageTag: 6490b7c9-0f7b-4598-8e84-5692bb25815b
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column date_id
+		dataType: int64
+		lineageTag: 158c988c-0081-4e87-bae1-911597ddf1f0
+		summarizeBy: none
+		sourceColumn: date_id
+
+	column month_id
+		dataType: string
+		lineageTag: 748f8823-521c-433d-a84e-e969d667de87
+		summarizeBy: none
+		sourceColumn: month_id
+
+	column total_monthly_revenue_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 2726a036-8976-49fa-91a4-fb5703eedce8
+		summarizeBy: sum
+		sourceColumn: total_monthly_revenue_gbp
+
+	column total_monthly_cogs_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: e6016566-c0f7-4915-adae-ef77d10b0d58
+		summarizeBy: sum
+		sourceColumn: total_monthly_cogs_gbp
+
+	column monthly_rent_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: c666edd6-c077-4a3e-a518-47a21f70b099
+		summarizeBy: sum
+		sourceColumn: monthly_rent_gbp
+
+	column monthly_staffing_cost_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 63b9518e-7883-4912-858e-f618fd0b3234
+		summarizeBy: sum
+		sourceColumn: monthly_staffing_cost_gbp
+
+	column loyalty_redemption_cost_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 2d8c6a91-cd9c-4674-946f-fd90f7e03975
+		summarizeBy: sum
+		sourceColumn: loyalty_redemption_cost_gbp
+
+	column net_profit_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: c4572f3a-c1ef-4870-9958-4dab04f0f3a3
+		summarizeBy: sum
+		sourceColumn: net_profit_gbp
+
+	column net_profit_margin_pct
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4fd19412-8b5d-414b-9538-ec3563b9509d
+		summarizeBy: none
+		sourceColumn: net_profit_margin_pct
+
+	column avg_daily_footfall
+		dataType: double
+		formatString: #,0
+		lineageTag: f9b15433-ef75-4f50-af75-cc5c76401b9a
+		summarizeBy: none
+		sourceColumn: avg_daily_footfall
+
+	column loyalty_member_revenue_pct
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 21a1dd06-4af7-4854-9698-0c04460a10ff
+		summarizeBy: none
+		sourceColumn: loyalty_member_revenue_pct
+
+	column loyalty_member_spend_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 4603416e-c28c-4e6b-a4b0-73ecacd9d3cd
+		summarizeBy: sum
+		sourceColumn: loyalty_member_spend_gbp
+
+	column non_member_spend_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 2876d1f4-06c0-43c6-a687-4a1b26493b96
+		summarizeBy: sum
+		sourceColumn: non_member_spend_gbp
+
+	column revenue_per_sqft_gbp
+		dataType: double
+		formatString: \£#,0.00
+		lineageTag: 0345559a-7574-4ab3-9810-af55aad7a40e
+		summarizeBy: none
+		sourceColumn: revenue_per_sqft_gbp
+
+	column peak_hour_transactions
+		dataType: int64
+		formatString: #,0
+		lineageTag: eabc8393-d982-42f2-a220-138ea6843329
+		summarizeBy: none
+		sourceColumn: peak_hour_transactions
+
+	column dead_hour_transactions
+		dataType: int64
+		formatString: #,0
+		lineageTag: ab0cd1e0-4a32-4f73-af07-9b33dff667c1
+		summarizeBy: none
+		sourceColumn: dead_hour_transactions
+
+	column avg_dwell_time_minutes
+		dataType: double
+		formatString: 0.0
+		lineageTag: e3f3c83b-2b7e-4d02-93b2-fae5db113ec9
+		summarizeBy: none
+		sourceColumn: avg_dwell_time_minutes
+
+	column rent_band
+		dataType: string
+		lineageTag: 33c3942b-205d-4449-aac7-31badc3e2cbd
+		summarizeBy: none
+		sourceColumn: rent_band
+
+	column 'Profit Status' =
+			SWITCH (
+			    TRUE (),
+			    'Monthly Profit'[net_profit_margin_pct] < -0.02, "Loss-making",
+			    'Monthly Profit'[net_profit_margin_pct] < 0.02, "Break-even",
+			    'Monthly Profit'[net_profit_margin_pct] < 0.15, "Profitable",
+			    "Highly profitable"
+			)
+		dataType: string
+		lineageTag: 23969851-a32c-484f-a6c4-dc3027873617
+		summarizeBy: none
+
+	column profitability_status
+		dataType: string
+		lineageTag: 0710d3f2-48d6-4537-a5bc-7fc89cc029bc
+		summarizeBy: none
+		sourceColumn: profitability_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Monthly Profit' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "fact_store_monthly_profitability.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"monthly_profit_id", Int64.Type}, {"store_id", Int64.Type}, {"date_id", Int64.Type}, {"month_id", type text}, {"total_monthly_revenue_gbp", type number}, {"total_monthly_cogs_gbp", type number}, {"monthly_rent_gbp", type number}, {"monthly_staffing_cost_gbp", type number}, {"loyalty_redemption_cost_gbp", type number}, {"net_profit_gbp", type number}, {"net_profit_margin_pct", type number}, {"avg_daily_footfall", type number}, {"loyalty_member_revenue_pct", type number}, {"loyalty_member_spend_gbp", type number}, {"non_member_spend_gbp", type number}, {"revenue_per_sqft_gbp", type number}, {"peak_hour_transactions", Int64.Type}, {"dead_hour_transactions", Int64.Type}, {"avg_dwell_time_minutes", type number}, {"rent_band", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

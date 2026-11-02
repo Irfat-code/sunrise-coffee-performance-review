@@ -1,0 +1,7 @@
+product_category,price_list_margin,realised_margin,realised_ci_low,realised_ci_high,has_revenue_stream
+Filter-Coffee,0.883,0.633,0.623,0.642,TRUE
+Espresso-Drinks,0.839,0.634,0.629,0.639,TRUE
+Food,0.74,0.623,0.615,0.63,TRUE
+Retail-Beans,0.677,0.62,0.606,0.634,TRUE
+Cold-Drinks,0.813,,,,FALSE
+Merchandise,0.702,,,,FALSE

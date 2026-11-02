@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SunriseCoffee"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9616cc92-8c29-4351-b748-c21a26f2c347"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "3621935424668057403a",
+  "position": {
+    "x": 800,
+    "y": 455.17241379310349,
+    "z": 24000,
+    "height": 62.068965517241381,
+    "width": 351.72413793103453,
+    "tabOrder": 24000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Select measure to view insights >",
+                    "textStyle": {
+                      "fontFamily": "Inter, Segoe UI, -apple-system, Helvetica, Arial, sans-serif",
+                      "fontStyle": "italic",
+                      "fontSize": "16pt",
+                      "color": "#7a6a5d"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 594.20289855072474,
+        "y": 158.45410996589109
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1242.4362208342475,
+            "y": 478.68559489563484
+          },
+          "nodeIndex": "Key Measures",
+          "nodeLineageTag": "3a5e8789-e81e-4953-b0ab-8817b4160fbb",
+          "size": {
+            "height": 300,
+            "width": 312.11690094319965
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 653.18805615752285,
+            "y": 82.530651872557769
+          },
+          "nodeIndex": "Daily Sales",
+          "nodeLineageTag": "9dcaf4a0-715e-4c8f-abef-2b669a4fec67",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 366.17131121329135,
+            "y": 303.74059159381682
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "1bfeeb12-e935-487c-be65-1f2fbf48a96b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1455.4208563404295,
+            "y": 262.87029579690841
+          },
+          "nodeIndex": "Measure Choice",
+          "nodeLineageTag": "d9bdb88b-42f4-4e57-a9c9-ac148f258505",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 248.72642513511369
+          },
+          "nodeIndex": "Monthly Profit",
+          "nodeLineageTag": "329609a9-cd9e-4ae6-bd74-44fa8dfcd7e9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1739.4208563404295,
+            "y": 262.87029579690841
+          },
+          "nodeIndex": "Pound Split",
+          "nodeLineageTag": "705f1d57-6981-4432-8b7f-41b75e1eca62",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 937.42085634042951,
+            "y": 48.750007605087376
+          },
+          "nodeIndex": "Product",
+          "nodeLineageTag": "243936e4-e38b-493b-ae31-38796457083d",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2023.4208563404295,
+            "y": 214.87029579690841
+          },
+          "nodeIndex": "Realised Margin",
+          "nodeLineageTag": "39ef9e56-b22a-4d2e-b7bf-1bb9b640eb49",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.98284606977762,
+            "y": -50
+          },
+          "nodeIndex": "Store",
+          "nodeLineageTag": "142614b5-c1d7-4431-8b3e-6b7fdcd37124",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 69,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

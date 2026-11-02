@@ -1,0 +1,163 @@
+table 'Daily Sales'
+	lineageTag: 9dcaf4a0-715e-4c8f-abef-2b669a4fec67
+
+	column store_id
+		dataType: int64
+		lineageTag: fbbda6b2-8187-4d97-a75e-e878ea41a65d
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column date_id
+		dataType: int64
+		lineageTag: 2204207d-f1e9-463e-b921-0b9b9b9df501
+		summarizeBy: none
+		sourceColumn: date_id
+
+	column product_id
+		dataType: int64
+		lineageTag: 372cba16-1130-4610-b7ae-1c451715101c
+		summarizeBy: none
+		sourceColumn: product_id
+
+	column total_revenue_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 4fe2a85b-8da9-4fa6-9a51-5fbf63dcf1b4
+		summarizeBy: sum
+		sourceColumn: total_revenue_gbp
+
+	column total_transactions
+		dataType: double
+		formatString: #,0
+		lineageTag: 94a72c80-a3af-448b-8e55-f25dbf414794
+		summarizeBy: sum
+		sourceColumn: total_transactions
+
+	column avg_transaction_value_gbp
+		dataType: double
+		formatString: \£#,0.00
+		lineageTag: 34fccbcd-09b9-4c07-96a9-fc604b21dd54
+		summarizeBy: none
+		sourceColumn: avg_transaction_value_gbp
+
+	column loyalty_transactions
+		dataType: double
+		formatString: #,0
+		lineageTag: ce700efa-4959-4ffa-9fed-cedf1195511d
+		summarizeBy: sum
+		sourceColumn: loyalty_transactions
+
+	column loyalty_redemption_cost_gbp
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 29952b72-5e57-42dc-b8f8-dc1ebcfa34f4
+		summarizeBy: sum
+		sourceColumn: loyalty_redemption_cost_gbp
+
+	column footfall
+		dataType: double
+		formatString: #,0
+		lineageTag: 55cdf85e-c2ac-40cd-a960-aab4da9392c9
+		summarizeBy: sum
+		sourceColumn: footfall
+
+	column espresso_revenue_gbp
+		dataType: double
+		formatString: \£#,0
+		lineageTag: f956d52f-c8cf-43e8-9a3e-ca80765d9fad
+		summarizeBy: sum
+		sourceColumn: espresso_revenue_gbp
+
+	column filter_revenue_gbp
+		dataType: double
+		formatString: \£#,0
+		lineageTag: 70dbefe3-6cf0-4000-b4e6-ef6f68e09e48
+		summarizeBy: sum
+		sourceColumn: filter_revenue_gbp
+
+	column food_revenue_gbp
+		dataType: double
+		formatString: \£#,0
+		lineageTag: 57e0aa3d-8a66-47d2-bfbc-8c7127141fc8
+		summarizeBy: sum
+		sourceColumn: food_revenue_gbp
+
+	column retail_beans_revenue_gbp
+		dataType: double
+		formatString: \£#,0
+		lineageTag: 4357918d-e8b8-4346-a2aa-3cd96fcdfc86
+		summarizeBy: sum
+		sourceColumn: retail_beans_revenue_gbp
+
+	column daily_gross_profit_gbp
+		dataType: double
+		formatString: \£#,0
+		lineageTag: 6badf401-7158-4a1e-83a8-bd9b19cdf754
+		summarizeBy: sum
+		sourceColumn: daily_gross_profit_gbp
+
+	column staff_count
+		dataType: double
+		formatString: 0.0
+		lineageTag: ac4c1e38-fbbf-4b44-a346-cf84a5b7cb65
+		summarizeBy: sum
+		sourceColumn: staff_count
+
+	column total_staff_hours
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 9e49a832-057a-434c-9f04-67197d21f6e4
+		summarizeBy: sum
+		sourceColumn: total_staff_hours
+
+	column avg_dwell_time_minutes
+		dataType: double
+		formatString: 0.0
+		lineageTag: 0e66ea45-b62e-43c6-8ab0-05562e3f841b
+		summarizeBy: none
+		sourceColumn: avg_dwell_time_minutes
+
+	column 'Day Type' = IF ( RELATED ( 'Date'[is_weekend] ), "Weekend", "Weekday" )
+		dataType: string
+		lineageTag: 00f32c5c-4054-4a75-8ec2-cf65209a2fa3
+		summarizeBy: none
+
+	partition 'Daily Sales' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "fact_daily_sales.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"store_id", Int64.Type}, {"date_id", Int64.Type}, {"product_id", Int64.Type}, {"total_revenue_gbp", type number}, {"total_transactions", type number}, {"avg_transaction_value_gbp", type number}, {"loyalty_transactions", type number}, {"loyalty_redemption_cost_gbp", type number}, {"footfall", type number}, {"espresso_revenue_gbp", type number}, {"filter_revenue_gbp", type number}, {"food_revenue_gbp", type number}, {"retail_beans_revenue_gbp", type number}, {"daily_gross_profit_gbp", type number}, {"staff_count", type number}, {"total_staff_hours", type number}, {"avg_dwell_time_minutes", type number}})
+				    ,
+				    // The daily table holds 1,090 duplicated store-days with conflicting values.
+				    // Average them so each store-day counts once (documented in the data-quality notes).
+				    Grouped = Table.Group(
+				        Typed,
+				        {"store_id", "date_id"},
+				        {
+				            {"product_id", each List.Max([product_id]), Int64.Type},
+				            {"total_revenue_gbp", each List.Average([total_revenue_gbp]), type number},
+				            {"total_transactions", each List.Average([total_transactions]), type number},
+				            {"avg_transaction_value_gbp", each List.Average([avg_transaction_value_gbp]), type number},
+				            {"loyalty_transactions", each List.Average([loyalty_transactions]), type number},
+				            {"loyalty_redemption_cost_gbp", each List.Average([loyalty_redemption_cost_gbp]), type number},
+				            {"footfall", each List.Average([footfall]), type number},
+				            {"espresso_revenue_gbp", each List.Average([espresso_revenue_gbp]), type number},
+				            {"filter_revenue_gbp", each List.Average([filter_revenue_gbp]), type number},
+				            {"food_revenue_gbp", each List.Average([food_revenue_gbp]), type number},
+				            {"retail_beans_revenue_gbp", each List.Average([retail_beans_revenue_gbp]), type number},
+				            {"daily_gross_profit_gbp", each List.Average([daily_gross_profit_gbp]), type number},
+				            {"staff_count", each List.Average([staff_count]), type number},
+				            {"total_staff_hours", each List.Average([total_staff_hours]), type number},
+				            {"avg_dwell_time_minutes", each List.Average([avg_dwell_time_minutes]), type number}
+				        }
+				    )
+				in
+				    Grouped
+
+	annotation PBI_ResultType = Table
+

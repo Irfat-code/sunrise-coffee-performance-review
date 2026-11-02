@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "cbd7ed14c2ba8a574505",
+  "position": {
+    "x": 1800,
+    "y": 0,
+    "z": 8000,
+    "height": 56.666666666666671,
+    "width": 150,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Select Year ",
+                    "textStyle": {
+                      "fontFamily": "Inter, Segoe UI, -apple-system, Helvetica, Arial, sans-serif",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt",
+                      "color": "#7a6a5d"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

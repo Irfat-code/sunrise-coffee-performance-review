@@ -1,0 +1,176 @@
+{
+  "name": "Sunrise Coffee",
+  "dataColors": [
+    "#6F4E37",
+    "#C9A27E",
+    "#8B5E3C",
+    "#E8D5C0",
+    "#3D8B67",
+    "#C08419",
+    "#B4442E",
+    "#A68A6D",
+    "#4F3524",
+    "#D9B892"
+  ],
+  "good": "#3D8B67",
+  "neutral": "#C08419",
+  "bad": "#B4442E",
+  "maximum": "#3D8B67",
+  "center": "#E8D5C0",
+  "minimum": "#B4442E",
+  "foreground": "#2B1E16",
+  "foregroundNeutralSecondary": "#7A6A5D",
+  "foregroundNeutralTertiary": "#A2958A",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F8F3ED",
+  "backgroundNeutral": "#E6DCD2",
+  "tableAccent": "#6F4E37",
+  "hyperlink": "#6F4E37",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#2B1E16"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 24,
+      "color": "#2B1E16"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 20,
+      "color": "#2B1E16"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Bold",
+      "fontSize": 56,
+      "color": "#2B1E16"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E6DCD2"
+              }
+            },
+            "radius": 20
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#2B1E16"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "alignment": "left",
+            "fontSize": 24,
+            "bold": true
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#F8F3ED"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "pageNavigator": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E6DCD2"
+              }
+            },
+            "radius": 20
+          }
+        ]
+      }
+    }
+  }
+}

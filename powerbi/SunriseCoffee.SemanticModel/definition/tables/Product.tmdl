@@ -1,0 +1,90 @@
+table Product
+	lineageTag: 243936e4-e38b-493b-ae31-38796457083d
+
+	column product_id
+		dataType: int64
+		isKey
+		lineageTag: 27102b6c-4f6b-46fe-8d78-39b67edf02db
+		summarizeBy: none
+		sourceColumn: product_id
+
+	column product_name
+		dataType: string
+		lineageTag: 66830837-c033-48b9-a726-f0c03dcbf256
+		summarizeBy: none
+		sourceColumn: product_name
+
+	column product_category
+		dataType: string
+		lineageTag: 530e6d3a-4c95-4821-b3b7-b7d3bc60d9a4
+		summarizeBy: none
+		sourceColumn: product_category
+
+	column unit_price_gbp
+		dataType: double
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		lineageTag: f45f859b-8adf-4ef1-aca9-be36e333c12c
+		summarizeBy: sum
+		sourceColumn: unit_price_gbp
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_cost_gbp
+		dataType: double
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		lineageTag: d63d662d-3186-46ef-9b14-79e78a36a354
+		summarizeBy: sum
+		sourceColumn: unit_cost_gbp
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_margin_pct
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2f041c30-ed50-42fb-b51b-eda96161f174
+		summarizeBy: sum
+		sourceColumn: gross_margin_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_loyalty_eligible
+		dataType: boolean
+		lineageTag: 17c67b1f-7b37-44b6-9622-ae88be2d9393
+		summarizeBy: none
+		sourceColumn: is_loyalty_eligible
+
+	column product_status
+		dataType: string
+		lineageTag: 9182c56c-be34-43c9-a811-41135febe7fb
+		summarizeBy: none
+		sourceColumn: product_status
+
+	column launch_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 88bd109e-30a6-4a16-8e8e-3dc7cf7c9b75
+		summarizeBy: none
+		sourceColumn: launch_date
+
+		variation Variation
+			isDefault
+			relationship: 1175e06d-9ed3-40ca-95f8-34b1a0dbd95d
+			defaultHierarchy: LocalDateTable_2bd28fe4-c544-48b5-a130-99cb1a129ba8.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "dim_product.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"product_id", Int64.Type}, {"product_name", type text}, {"product_category", type text}, {"unit_price_gbp", type number}, {"unit_cost_gbp", type number}, {"gross_margin_pct", type number}, {"is_loyalty_eligible", type logical}, {"product_status", type text}, {"launch_date", type date}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

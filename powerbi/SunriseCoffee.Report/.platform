@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SunriseCoffee"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "edfa6eb6-fc97-42e4-b46e-c1ba5f895875"
+  }
+}

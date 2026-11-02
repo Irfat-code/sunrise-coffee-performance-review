@@ -1,0 +1,230 @@
+table Store
+	lineageTag: 142614b5-c1d7-4431-8b3e-6b7fdcd37124
+
+	column store_id
+		dataType: int64
+		isKey
+		lineageTag: 8b263c7c-334e-4839-8664-01dfb42a478a
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column store_name
+		dataType: string
+		lineageTag: 5f0ecbf0-c2ba-4b2f-8032-f86dd53a6de2
+		summarizeBy: none
+		sourceColumn: store_name
+
+	column store_format
+		dataType: string
+		lineageTag: 08c2d273-9848-4641-b7e6-d600e0d42c9d
+		summarizeBy: none
+		sourceColumn: store_format
+
+	column location_type
+		dataType: string
+		lineageTag: b6014056-12a9-4292-a4a5-dca5fb1f1986
+		summarizeBy: none
+		sourceColumn: location_type
+
+	column city
+		dataType: string
+		lineageTag: 181ad19e-0826-4af4-907d-11aa42c965bc
+		summarizeBy: none
+		sourceColumn: city
+
+	column region
+		dataType: string
+		lineageTag: feaddc61-0920-41e3-bcf9-4c93be277d2d
+		summarizeBy: none
+		sourceColumn: region
+
+	column monthly_rent_gbp
+		dataType: double
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		lineageTag: 97330e34-deb8-4f15-9a4b-754aaa35bf16
+		summarizeBy: sum
+		sourceColumn: monthly_rent_gbp
+
+	column staff_headcount
+		dataType: int64
+		formatString: 0
+		lineageTag: c5181832-0221-43ec-9b50-478513768df2
+		summarizeBy: sum
+		sourceColumn: staff_headcount
+
+	column monthly_staffing_cost_gbp
+		dataType: double
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		lineageTag: 197ab84e-45af-4b24-80c7-a04ef370e861
+		summarizeBy: sum
+		sourceColumn: monthly_staffing_cost_gbp
+
+	column loyalty_adoption_rate
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d4131829-2069-42df-ab8f-f0f3e7fbddc1
+		summarizeBy: none
+		sourceColumn: loyalty_adoption_rate
+
+	column seating_capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: c2d4a9c8-7f94-4e8a-8c86-ddf88a476051
+		summarizeBy: sum
+		sourceColumn: seating_capacity
+
+	column opening_year
+		dataType: int64
+		formatString: 0
+		lineageTag: f04cf0b3-c93f-4898-85bb-7e237faea558
+		summarizeBy: none
+		sourceColumn: opening_year
+
+	column store_status
+		dataType: string
+		lineageTag: 02300721-706a-464e-b468-c0f5239d491e
+		summarizeBy: none
+		sourceColumn: store_status
+
+	column 'Store Sales 2024' = CALCULATE ( [Sales], 'Date'[year] = 2024 )
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: 169e2188-200e-4908-b066-c6a68ba74015
+		summarizeBy: none
+
+	column 'Store Profit 2024' = CALCULATE ( [Net Profit], 'Date'[year] = 2024 )
+		dataType: double
+		formatString: \£#,0;(\£#,0);\£#,0
+		lineageTag: c0fec07c-c4f1-403d-953f-ee0aa49afb77
+		summarizeBy: none
+
+	column 'Store Margin' = DIVIDE ( CALCULATE ( [Net Profit], ALL ( 'Date' ) ), CALCULATE ( [Sales], ALL ( 'Date' ) ) )
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6062c164-2d65-42a3-b20a-e1fabe404281
+		summarizeBy: none
+
+	column 'Store Rent %' = DIVIDE ( CALCULATE ( [Rent], ALL ( 'Date' ) ), CALCULATE ( [Sales], ALL ( 'Date' ) ) )
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4a567570-3f66-4a88-b654-145d954fe4bf
+		summarizeBy: none
+
+	column 'Months Losing Money' = CALCULATE ( COUNTROWS ( 'Monthly Profit' ), 'Monthly Profit'[net_profit_margin_pct] < -0.02, ALL ( 'Date' ) ) + 0
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b32647a-3fad-430e-bfd3-9c38c1681a65
+		summarizeBy: none
+
+	column 'Margin 2023' = DIVIDE ( CALCULATE ( [Net Profit], 'Date'[year] = 2023 ), CALCULATE ( [Sales], 'Date'[year] = 2023 ) )
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3b53500a-5a1c-4fdb-9a3a-4eb97e2cf2cc
+		summarizeBy: none
+
+	column 'Margin 2024' = DIVIDE ( CALCULATE ( [Net Profit], 'Date'[year] = 2024 ), CALCULATE ( [Sales], 'Date'[year] = 2024 ) )
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 1dd41c18-a42b-471f-909f-478a4c4860f0
+		summarizeBy: none
+
+	column 'Review Status' =
+			VAR Margin = 'Store'[Store Margin]
+			VAR Fall = 'Store'[Margin 2023] - 'Store'[Margin 2024]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        'Store'[Store Profit 2024] < 0, "Losing money",
+			        Margin < 0.08, "Review",
+			        'Store'[Months Losing Money] >= 6, "Review",
+			        Fall >= 0.05 && 'Store'[Margin 2024] < 0.08, "Review",
+			        "Healthy"
+			    )
+		dataType: string
+		lineageTag: 179aad81-b5df-42da-abce-c88ac497b29e
+		summarizeBy: none
+
+	column 'Rent Level' =
+			VAR Share = 'Store'[Store Rent %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        Share < 0.0696, "1. Under 7% rent",
+			        Share < 0.0872, "2. 7-8.7% rent",
+			        Share < 0.1345, "3. 8.7-13.4% rent",
+			        "4. Over 13.4% rent"
+			    )
+		dataType: string
+		lineageTag: 4b692b21-29f2-4a40-a302-86cfa03832a8
+		summarizeBy: none
+
+	column 'Over 10% Rent' = IF ( 'Store'[Store Rent %] > 0.10, "Over 10%", "Under 10%" )
+		dataType: string
+		lineageTag: 70615a7c-9c89-4f0d-bce3-61436845430f
+		summarizeBy: none
+
+	column 'Loyalty Take-up Band' =
+			VAR Take = 'Store'[loyalty_adoption_rate]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        Take < 0.13, "1. Under 13% of customers",
+			        Take < 0.31, "2. 13-31%",
+			        Take < 0.40, "3. 31-40%",
+			        Take < 0.48, "4. 42-48%",
+			        "5. Over 48%"
+			    )
+		dataType: string
+		lineageTag: d5c98666-d6b4-46fe-8c4b-7f2e2115d4be
+		summarizeBy: none
+
+	column 'Take-up Label' =
+			
+			SWITCH ( [Loyalty Take-up Band],
+			    "1. Under 13% of customers", "6–13%",
+			    "2. 13-31%", "13–31%",
+			    "3. 31-40%", "31–40%",
+			    "4. 42-48%", "42–48%",
+			    "5. Over 48%", "51–59%" )
+		lineageTag: db7df681-dae6-4754-a397-d936d4966586
+		summarizeBy: none
+		sortByColumn: 'Loyalty Take-up Band'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rent Band Label' = MID ( 'Store'[Rent Level], 4, 100 )
+		lineageTag: 1d582199-17a4-471d-bc3d-32574619686c
+		summarizeBy: none
+		sortByColumn: 'Rent Band Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rent Band Order' = VALUE ( LEFT ( 'Store'[Rent Level], 1 ) )
+		lineageTag: b8ab4874-1313-466e-8e03-5d36dc037244
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Store = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "dim_store.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"store_id", Int64.Type}, {"store_name", type text}, {"store_format", type text}, {"location_type", type text}, {"city", type text}, {"region", type text}, {"monthly_rent_gbp", type number}, {"staff_headcount", Int64.Type}, {"monthly_staffing_cost_gbp", type number}, {"loyalty_adoption_rate", type number}, {"seating_capacity", Int64.Type}, {"opening_year", Int64.Type}, {"store_status", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

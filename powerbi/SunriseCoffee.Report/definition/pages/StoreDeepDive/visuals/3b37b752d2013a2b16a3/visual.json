@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "3b37b752d2013a2b16a3",
+  "position": {
+    "x": 2125,
+    "y": 0,
+    "z": 7000,
+    "height": 55,
+    "width": 150,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Select store ",
+                    "textStyle": {
+                      "fontFamily": "Inter, Segoe UI, -apple-system, Helvetica, Arial, sans-serif",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt",
+                      "color": "#7a6a5d"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

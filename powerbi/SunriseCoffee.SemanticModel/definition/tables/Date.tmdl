@@ -1,0 +1,138 @@
+table Date
+	lineageTag: 1bfeeb12-e935-487c-be65-1f2fbf48a96b
+
+	column date_id
+		dataType: int64
+		isKey
+		lineageTag: 89c9a955-aa90-4656-be42-fa9504a11444
+		summarizeBy: none
+		sourceColumn: date_id
+
+	column full_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: ece4176e-a0ba-4dc1-8354-eabf5cc014ed
+		summarizeBy: none
+		sourceColumn: full_date
+
+		variation Variation
+			isDefault
+			relationship: 3aa12512-34f4-4bed-8b71-99ab3b27e6ad
+			defaultHierarchy: LocalDateTable_6555ffbc-2562-4019-97d7-e61ddc07fb27.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 48c58580-2a48-445b-98f0-310e870d1f15
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		dataType: int64
+		formatString: 0
+		lineageTag: fe904026-e07e-4a1b-afe7-bc0bcf0ddbe3
+		summarizeBy: sum
+		sourceColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 961980d4-adc0-4059-900d-413c6eae162c
+		summarizeBy: none
+		sourceColumn: month_name
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 9539025e-17d8-4a5e-a06e-9efd843167f0
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 1409da4b-8ab9-4421-899b-6958aece1b7a
+		summarizeBy: sum
+		sourceColumn: week_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: string
+		lineageTag: 4133e7ed-d059-4b3b-b34d-082ead2df8be
+		summarizeBy: none
+		sourceColumn: day_of_week
+		sortByColumn: 'Day Number'
+
+		changedProperty = SortByColumn
+
+	column is_weekend
+		dataType: boolean
+		lineageTag: 12d077ca-710c-4549-907f-55e6800706e5
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+	column is_uk_bank_holiday
+		dataType: boolean
+		lineageTag: bec3b7a0-7eac-4b05-aae1-6068fcf07bae
+		summarizeBy: none
+		sourceColumn: is_uk_bank_holiday
+
+	column uk_trading_calendar
+		dataType: string
+		lineageTag: 9ed46543-fc15-4611-bddf-825bec71b8fa
+		summarizeBy: none
+		sourceColumn: uk_trading_calendar
+
+	column 'Day Number' = WEEKDAY ( 'Date'[full_date], 2 )
+		dataType: int64
+		formatString: 0
+		lineageTag: 399c6f16-908b-451c-84a1-ac7b153dce0e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Label' = FORMAT ( 'Date'[full_date], "mmm yy" )
+		dataType: string
+		lineageTag: 65f80c1b-85eb-46dd-8bb6-6f3cdf0962d7
+		summarizeBy: none
+
+	column 'Month Order' = 'Date'[year] * 100 + 'Date'[month_number]
+		dataType: int64
+		formatString: 0
+		lineageTag: 49446de0-5f51-4c33-bc35-e123ae51a7af
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_short = FORMAT('Date'[full_date],"mmm")
+		lineageTag: 67108c2c-0f0f-4e78-bc76-9aba3b8f1c28
+		summarizeBy: none
+		sortByColumn: month_number
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "dim_date.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"date_id", Int64.Type}, {"full_date", type date}, {"year", Int64.Type}, {"month_number", Int64.Type}, {"month_name", type text}, {"quarter", Int64.Type}, {"week_number", Int64.Type}, {"day_of_week", type text}, {"is_weekend", type logical}, {"is_uk_bank_holiday", type logical}, {"uk_trading_calendar", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

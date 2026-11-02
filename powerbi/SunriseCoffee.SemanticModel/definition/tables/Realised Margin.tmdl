@@ -1,0 +1,58 @@
+table 'Realised Margin'
+	lineageTag: 39ef9e56-b22a-4d2e-b7bf-1bb9b640eb49
+
+	column product_category
+		dataType: string
+		lineageTag: f9e208fd-5737-44ca-8935-586ca9bcc5c7
+		summarizeBy: none
+		sourceColumn: product_category
+
+	column price_list_margin
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2d041523-1e88-41b0-91d7-a7eb5a0233cd
+		summarizeBy: none
+		sourceColumn: price_list_margin
+
+	column realised_margin
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bec0f7d8-c405-4154-8133-9f3d093b5ea5
+		summarizeBy: none
+		sourceColumn: realised_margin
+
+	column realised_ci_low
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 83cd5821-85bc-4531-8321-b3ef8460ed40
+		summarizeBy: none
+		sourceColumn: realised_ci_low
+
+	column realised_ci_high
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b28e75d9-fa9b-41f3-b748-7efd3f123853
+		summarizeBy: none
+		sourceColumn: realised_ci_high
+
+	column has_revenue_stream
+		dataType: boolean
+		lineageTag: 26806761-fbcd-4eba-8991-60336e6be2b3
+		summarizeBy: none
+		sourceColumn: has_revenue_stream
+
+	partition 'Realised Margin' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "analysis_realised_margin.csv"),
+				        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+				    ),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"product_category", type text}, {"price_list_margin", type number}, {"realised_margin", type number}, {"realised_ci_low", type number}, {"realised_ci_high", type number}, {"has_revenue_stream", type logical}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

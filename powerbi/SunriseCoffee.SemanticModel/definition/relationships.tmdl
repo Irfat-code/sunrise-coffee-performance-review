@@ -1,0 +1,30 @@
+relationship StoreMonthly
+	fromColumn: 'Monthly Profit'.store_id
+	toColumn: Store.store_id
+
+relationship StoreDaily
+	fromColumn: 'Daily Sales'.store_id
+	toColumn: Store.store_id
+
+relationship DateMonthly
+	fromColumn: 'Monthly Profit'.date_id
+	toColumn: Date.date_id
+
+relationship DateDaily
+	fromColumn: 'Daily Sales'.date_id
+	toColumn: Date.date_id
+
+relationship ProductDaily
+	fromColumn: 'Daily Sales'.product_id
+	toColumn: Product.product_id
+
+relationship 3aa12512-34f4-4bed-8b71-99ab3b27e6ad
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Date.full_date
+	toColumn: LocalDateTable_6555ffbc-2562-4019-97d7-e61ddc07fb27.Date
+
+relationship 1175e06d-9ed3-40ca-95f8-34b1a0dbd95d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Product.launch_date
+	toColumn: LocalDateTable_2bd28fe4-c544-48b5-a130-99cb1a129ba8.Date
+

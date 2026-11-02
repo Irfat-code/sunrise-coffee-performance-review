@@ -1,0 +1,35 @@
+table 'Pound Split'
+	lineageTag: 705f1d57-6981-4432-8b7f-41b75e1eca62
+
+	column Part
+		dataType: string
+		lineageTag: 8e78bd9e-b9b0-4bde-a764-b6fa22e2fe8e
+		summarizeBy: none
+		sourceColumn: [Part]
+		sortByColumn: Order
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e9c72e04-8e23-479f-9007-e48491004fd0
+		summarizeBy: none
+		sourceColumn: [Order]
+
+	partition 'Pound Split' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Part", STRING,
+				    "Order", INTEGER,
+				    {
+				        { "Cost of goods", 1 },
+				        { "Staff", 2 },
+				        { "Rent", 3 },
+				        { "Loyalty", 4 },
+				        { "Profit", 5 }
+				    }
+				)
+
+	annotation PBI_Id = PoundSplit
+

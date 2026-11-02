@@ -1,0 +1,33 @@
+table 'Measure Choice'
+	lineageTag: d9bdb88b-42f4-4e57-a9c9-ac148f258505
+
+	column 'Measure Choice'
+		dataType: string
+		lineageTag: 4b7b0838-92f4-4f2e-bac7-b7907e16bf8f
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Measure Choice Order'
+
+	column 'Measure Choice Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0ae600a7-8a5b-4c30-9b37-0c34fa9567f0
+		summarizeBy: none
+		sourceColumn: [Value2]
+
+	partition 'Measure Choice' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Value1", STRING,
+				    "Value2", INTEGER,
+				    {
+				        { "Net Profit", 0 },
+				        { "Net Margin", 1 },
+				        { "Sales", 2 }
+				    }
+				)
+
+	annotation PBI_Id = MeasureChoice
+

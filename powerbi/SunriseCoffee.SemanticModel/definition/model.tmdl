@@ -1,0 +1,33 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Source
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation PBI_QueryOrder = ["Store","Date","Product","Monthly Profit","Daily Sales","Realised Margin","DataFolder"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Store
+ref table Date
+ref table Product
+ref table 'Monthly Profit'
+ref table 'Daily Sales'
+ref table 'Realised Margin'
+ref table 'Pound Split'
+ref table 'Measure Choice'
+ref table 'Key Measures'
+ref table DateTableTemplate_2d3ca45d-e169-4c5d-be48-fc6b83a9caca
+ref table LocalDateTable_6555ffbc-2562-4019-97d7-e61ddc07fb27
+ref table LocalDateTable_2bd28fe4-c544-48b5-a130-99cb1a129ba8
+
+ref cultureInfo en-GB
+

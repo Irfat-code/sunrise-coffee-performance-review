@@ -1,0 +1,10 @@
+/// The folder that holds the Sunrise Coffee CSV files. Change this to the data
+/// folder on your machine (keep the trailing slash), then press Refresh.
+expression DataFolder = "C:\SunriseCoffee\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 336ffe46-1765-46c3-b3a3-6409ecd44efd
+	queryGroup: Source
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+

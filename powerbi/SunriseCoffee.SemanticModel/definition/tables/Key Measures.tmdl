@@ -1,0 +1,1368 @@
+table 'Key Measures'
+	lineageTag: 3a5e8789-e81e-4953-b0ab-8817b4160fbb
+
+	/// Total sales from the monthly P&L. Never from the daily sample, which is a 20% extract.
+	measure Sales = SUM ( 'Monthly Profit'[total_monthly_revenue_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: 146af02c-bd1a-407e-819d-703963c6eb35
+
+	measure 'Net Profit' = SUM ( 'Monthly Profit'[net_profit_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: a9ee953c-b682-4e64-bd7b-5fabcc6d1cc2
+
+	measure 'Cost of Goods' = SUM ( 'Monthly Profit'[total_monthly_cogs_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: 59997b9c-39a9-4b45-b173-c12d25b36db4
+
+	measure 'Staff Cost' = SUM ( 'Monthly Profit'[monthly_staffing_cost_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: 4da4d5b7-5f9c-4e8a-823b-e5652eb93e45
+
+	measure Rent = SUM ( 'Monthly Profit'[monthly_rent_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: e661ee22-489e-4de8-b1d4-9c5bd62e9055
+
+	measure 'Loyalty Reward Cost' = SUM ( 'Monthly Profit'[loyalty_redemption_cost_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Money
+		lineageTag: 630b8a2b-cc1a-49e9-accd-3bf97e0970a5
+
+	measure 'Member Sales' = SUM ( 'Monthly Profit'[loyalty_member_spend_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Loyalty
+		lineageTag: 545f3eec-f2b2-46bf-8ee4-a481c40377ea
+
+	measure 'Non-member Sales' = SUM ( 'Monthly Profit'[non_member_spend_gbp] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Loyalty
+		lineageTag: 989c562f-39c1-4789-b427-798b8495bdf3
+
+	/// Net profit as a share of sales.
+	measure 'Net Margin' = DIVIDE ( [Net Profit], [Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Money
+		lineageTag: cd3bbf90-2984-4d57-927b-f22709e96ef9
+
+	measure 'Store Count' = DISTINCTCOUNT ( 'Monthly Profit'[store_id] )
+		formatString: #,0
+		displayFolder: Stores
+		lineageTag: 8ac8b555-1638-4b16-815b-d41ce403d7b4
+
+	measure 'Profit per Store' = DIVIDE ( [Net Profit], [Store Count] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Stores
+		lineageTag: 6a5979fe-71f3-40a2-9e75-6d4c578b2f7c
+
+	measure 'Sales 2023' = CALCULATE ( [Sales], 'Date'[year] = 2023 )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Year
+		lineageTag: ce46c0da-1a0a-4568-9031-e23c2e2ad506
+
+	measure 'Net Profit 2023' = CALCULATE ( [Net Profit], 'Date'[year] = 2023 )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Year
+		lineageTag: ff2b2a8a-fa78-44e6-ae87-293fe5468a0d
+
+	measure 'Net Margin 2023' = DIVIDE ( [Net Profit 2023], [Sales 2023] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Year
+		lineageTag: 0541e644-eee9-4198-876b-2b3f6ecce92c
+
+	measure 'Sales 2024' = CALCULATE ( [Sales], 'Date'[year] = 2024 )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Year
+		lineageTag: c74feaec-6d2b-46a6-959e-02e32a9b6d9c
+
+	measure 'Net Profit 2024' = CALCULATE ( [Net Profit], 'Date'[year] = 2024 )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Year
+		lineageTag: 3608cafa-182f-4d09-aa22-eb8f23a5f517
+
+	measure 'Net Margin 2024' = DIVIDE ( [Net Profit 2024], [Sales 2024] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Year
+		lineageTag: 66aa0008-66e8-4283-8988-e2dc6039c53a
+
+	measure 'Sales vs 2023 %' = DIVIDE ( [Sales 2024] - [Sales 2023], [Sales 2023] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Year
+		lineageTag: 3d16282c-f4f2-4028-8cc8-d455b7df00a9
+
+	measure 'Profit vs 2023 %' = DIVIDE ( [Net Profit 2024] - [Net Profit 2023], [Net Profit 2023] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Year
+		lineageTag: 5cdc7330-bffc-4182-b1f0-2db2f89ad8da
+
+	/// Change in margin between 2023 and 2024, in percentage points.
+	measure 'Margin Change pts' = ( [Net Margin 2024] - [Net Margin 2023] ) * 100
+		formatString: 0.0;-0.0;0.0
+		displayFolder: Year
+		lineageTag: 0190b7fa-6034-4e94-ad8e-ed1a250d68d9
+
+	measure 'Profit per Store 2024' = DIVIDE ( [Net Profit 2024], CALCULATE ( [Store Count], 'Date'[year] = 2024 ) )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Stores
+		lineageTag: 9e3965c6-2b42-4342-8329-bfb363362438
+
+	/// Net margin for all 60 stores, ignoring any store filter. Used as the benchmark line.
+	measure 'Estate Net Margin' = CALCULATE ( [Net Margin], REMOVEFILTERS ( 'Store' ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Money
+		lineageTag: a9d28778-c588-4335-8897-6a95d22d4874
+
+	measure 'Margin vs Estate pts' = ( [Net Margin] - [Estate Net Margin] ) * 100
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Money
+		lineageTag: 2d4b9bd2-b295-48f0-9422-30312aa544ec
+
+	/// The middle store when all stores are ranked by margin (the median), so one unusual store cannot
+	/// skew it.
+	measure 'Typical Store Margin' = MEDIANX ( VALUES ( 'Store'[store_id] ), [Net Margin] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Stores
+		lineageTag: c332219d-5a72-4527-a530-6a717d9bbb90
+
+	measure 'Typical Store Sales' = MEDIANX ( VALUES ( 'Store'[store_id] ), [Sales] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Stores
+		lineageTag: 1ffb9a10-ac39-465a-87b7-e2e9b4a4a20b
+
+	measure 'Cost of Goods per £1' = DIVIDE ( [Cost of Goods], [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: 12acd679-7ed0-4954-9f0d-0dc503c78c5d
+
+	measure 'Staff per £1' = DIVIDE ( [Staff Cost], [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: 2b7226c9-851f-4c4f-a897-0d3b38e2d999
+
+	measure 'Rent per £1' = DIVIDE ( [Rent], [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: 5ace4e22-1b92-4294-b036-86fd90c1a05b
+
+	measure 'Loyalty per £1' = DIVIDE ( [Loyalty Reward Cost], [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: 790875fc-6f15-4e39-922f-d058d9a688dd
+
+	measure 'Profit per £1' = DIVIDE ( [Net Profit], [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: fc32778d-4512-4e48-9b39-d9d76a50c5c8
+
+	measure 'Rent % of Sales' = DIVIDE ( [Rent], [Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Rent
+		lineageTag: fef88caf-d5e3-4c42-a400-b514b55851e7
+
+	measure 'Stores Over 10% Rent' = COUNTROWS ( FILTER ( VALUES ( 'Store'[store_id] ), [Rent % of Sales] > 0.10 ) ) + 0
+		formatString: #,0
+		displayFolder: Rent
+		lineageTag: 5a4424aa-cf61-4861-aa06-cf798d6a97ba
+
+	measure 'Stores Under 8% Margin' = COUNTROWS ( FILTER ( VALUES ( 'Store'[store_id] ), [Net Margin] < 0.08 ) ) + 0
+		formatString: #,0
+		displayFolder: Stores
+		lineageTag: b3094201-c71b-4407-a257-6d8a770c0980
+
+	measure 'Stores Losing Money' = COUNTROWS ( FILTER ( VALUES ( 'Store'[store_id] ), [Net Profit 2024] < 0 ) ) + 0
+		formatString: #,0
+		displayFolder: Stores
+		lineageTag: 5a3b28ca-82f7-4fcb-8983-9758f5b82c36
+
+	measure 'Stores to Review' = CALCULATE ( [Store Count], 'Store'[Review Status] IN { "Review", "Losing money" } ) + 0
+		formatString: #,0
+		displayFolder: Stores
+		lineageTag: b7751cd2-933a-4250-875e-3457b4ba163b
+
+	/// A month counts as losing money when its margin is below −2%.
+	measure 'Months Losing Money per Store' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( 'Monthly Profit' ), 'Monthly Profit'[net_profit_margin_pct] < -0.02 ),
+			    [Store Count]
+			)
+		formatString: #,0.0
+		displayFolder: Stores
+		lineageTag: 4483d20f-f8ff-4eb4-a25a-d5c600df57da
+
+	/// Spend per member visit. Uses the 20% daily sample for visits, compared within each store.
+	measure 'Member Spend per Visit' =
+			VAR Visits = SUM ( 'Daily Sales'[loyalty_transactions] )
+			VAR MemberShare = DIVIDE ( [Member Sales], [Sales] )
+			RETURN DIVIDE ( SUM ( 'Daily Sales'[total_revenue_gbp] ) * MemberShare, Visits )
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		displayFolder: Loyalty
+		lineageTag: bb77193f-b0c4-4142-b716-7c051660572c
+
+	measure 'Members Share of Sales' = DIVIDE ( [Member Sales], [Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Loyalty
+		lineageTag: 151d02f0-96ad-4f40-9485-c2d5b0a02ef4
+
+	measure 'Customers in Scheme' = AVERAGEX ( VALUES ( 'Store'[store_id] ), CALCULATE ( MAX ( 'Store'[loyalty_adoption_rate] ) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Loyalty
+		lineageTag: 1ba8074d-5f09-405a-8707-ab0e41a89ac4
+
+	measure 'Reward Cost % of Member Sales' = DIVIDE ( [Loyalty Reward Cost], [Member Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Loyalty
+		lineageTag: 4297af5d-3eb8-424b-ae3e-b1c06de49f36
+
+	measure 'Reward Cost per Store' = DIVIDE ( CALCULATE ( [Loyalty Reward Cost], 'Date'[year] = 2024 ), CALCULATE ( [Store Count], 'Date'[year] = 2024 ) )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Loyalty
+		lineageTag: f1838fac-9885-4660-9dfb-010c30f2e49a
+
+	measure 'Reward Cost % of Net Profit' = DIVIDE ( [Loyalty Reward Cost], [Net Profit] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Loyalty
+		lineageTag: 03114bc3-f95c-427e-af9d-761377660d9a
+
+	/// Extra member sales needed to cover the reward cost. No uplift of this size is visible in the
+	/// data.
+	measure 'Uplift Needed to Break Even' = DIVIDE ( [Loyalty Reward Cost], [Member Sales] - [Loyalty Reward Cost] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Loyalty
+		lineageTag: a0cbdd85-03c1-40f0-969c-ebca51fa5a2e
+
+	measure 'Extra Member Sales Needed' = [Member Sales] * [Uplift Needed to Break Even]
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Loyalty
+		lineageTag: 6e61fd61-aaac-4c24-bd66-69e221411c41
+
+	/// 1.00 means members spend the same as everyone else. Above 1.00 would mean members spend more.
+	measure 'Member Spend Index' =
+			VAR MemberShareOfSales = DIVIDE ( [Member Sales], [Sales] )
+			VAR MemberShareOfVisits =
+			    DIVIDE ( SUM ( 'Daily Sales'[loyalty_transactions] ), SUM ( 'Daily Sales'[total_transactions] ) )
+			RETURN DIVIDE ( MemberShareOfSales, MemberShareOfVisits )
+		formatString: 0.00
+		displayFolder: Loyalty
+		lineageTag: baf3ff1a-ccf2-45a3-902e-7dca388893b8
+
+	/// 100 = that store's own average day. Compared within each store, so store size does not distort
+	/// it.
+	measure 'Sales Index vs Average Day' =
+			VAR PerStore =
+			    AVERAGEX (
+			        VALUES ( 'Store'[store_id] ),
+			        VAR StoreAverage =
+			            CALCULATE ( AVERAGE ( 'Daily Sales'[total_revenue_gbp] ), REMOVEFILTERS ( 'Date' ) )
+			        RETURN DIVIDE ( AVERAGE ( 'Daily Sales'[total_revenue_gbp] ), StoreAverage )
+			    )
+			RETURN PerStore * 100
+		formatString: #,0
+		displayFolder: Day of week
+		lineageTag: 30d21db6-95c2-4391-8d0f-18a3360381d3
+
+	measure 'Staff Hours Index vs Average Day' =
+			VAR PerStore =
+			    AVERAGEX (
+			        VALUES ( 'Store'[store_id] ),
+			        VAR StoreAverage =
+			            CALCULATE ( AVERAGE ( 'Daily Sales'[total_staff_hours] ), REMOVEFILTERS ( 'Date' ) )
+			        RETURN DIVIDE ( AVERAGE ( 'Daily Sales'[total_staff_hours] ), StoreAverage )
+			    )
+			RETURN PerStore * 100
+		formatString: #,0
+		displayFolder: Day of week
+		lineageTag: d81117ed-9007-4c98-b958-3898fdea4dec
+
+	measure 'Weekend vs Weekday %' =
+			VAR Weekend = CALCULATE ( [Sales Index vs Average Day], 'Date'[is_weekend] = TRUE () )
+			VAR Weekday = CALCULATE ( [Sales Index vs Average Day], 'Date'[is_weekend] = FALSE () )
+			RETURN DIVIDE ( Weekend - Weekday, Weekday )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Day of week
+		lineageTag: 658fdf82-5930-4059-afda-ea28e90473cc
+
+	/// Gross profit actually kept from each £1 of sales, from the daily sample.
+	measure 'Profit Kept per £1' =
+			DIVIDE (
+			    SUM ( 'Daily Sales'[daily_gross_profit_gbp] ),
+			    SUM ( 'Daily Sales'[total_revenue_gbp] )
+			) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Product
+		lineageTag: 9d1fed6c-c7d8-4b50-98c5-bbdbc4c076d7
+
+	measure 'Price List Margin' = AVERAGE ( 'Realised Margin'[price_list_margin] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Product
+		lineageTag: 4ddb208d-5b67-48a1-9008-3cf53f4fc863
+
+	/// Gross profit kept per £1, estimated per stream by regressing daily gross profit on stream
+	/// revenue.
+	measure 'Realised Margin' = AVERAGE ( 'Realised Margin'[realised_margin] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Product
+		lineageTag: daebc256-0e22-4dcb-a384-44afb3816c48
+
+	measure 'Espresso Drinks Share' = DIVIDE ( SUM ( 'Daily Sales'[espresso_revenue_gbp] ), SUM ( 'Daily Sales'[total_revenue_gbp] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Product
+		lineageTag: 1c27e09d-6d57-47ad-9fb0-998559e3fe5f
+
+	measure 'Filter Coffee Share' = DIVIDE ( SUM ( 'Daily Sales'[filter_revenue_gbp] ), SUM ( 'Daily Sales'[total_revenue_gbp] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Product
+		lineageTag: a2cf9afe-9b65-4822-8688-969e894fb750
+
+	measure 'Food Share' = DIVIDE ( SUM ( 'Daily Sales'[food_revenue_gbp] ), SUM ( 'Daily Sales'[total_revenue_gbp] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Product
+		lineageTag: d0ce592c-f928-4d52-a272-7381a5a5bfeb
+
+	measure 'Retail Beans Share' = DIVIDE ( SUM ( 'Daily Sales'[retail_beans_revenue_gbp] ), SUM ( 'Daily Sales'[total_revenue_gbp] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Product
+		lineageTag: 3120abd3-4b8e-4a74-beef-977d07b393b8
+
+	/// Profit a year if London stores earned the estate median margin. From the analysis repo.
+	measure 'London Rent Opportunity' = 563305
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: At stake
+		lineageTag: 4912321a-1220-49a8-ae13-d8c4c19e085d
+
+	/// 2024 reward cost that is at risk if the test shows no uplift.
+	measure 'Loyalty Reward at Stake' = 862937
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: At stake
+		lineageTag: d6d1e48e-1b0f-488f-9f66-55c76ea42d9c
+
+	/// Upper bound if weekend hours matched weekday productivity, before minimum crew levels.
+	measure 'Weekend Staffing Opportunity' = 971558
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: At stake
+		lineageTag: 779685ae-01dc-4566-ad4d-9019d41f7344
+
+	measure 'Total at Stake' = [London Rent Opportunity] + [Loyalty Reward at Stake] + [Weekend Staffing Opportunity]
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: At stake
+		lineageTag: f06cf139-cdfd-467d-884f-844ecda529ed
+
+	/// Follows the Net Profit / Net Margin / Sales buttons on the Overview page.
+	measure 'Selected Measure' =
+			VAR Chosen = SELECTEDVALUE ( 'Measure Choice'[Measure Choice Order], 0 )
+			RETURN
+			    SWITCH (
+			        Chosen,
+			        0, [Net Profit],
+			        1, [Net Margin],
+			        2, [Sales]
+			    )
+		displayFolder: Pence per £1
+		lineageTag: c9437358-80cc-4883-993c-80c59c75beae
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Measure Choice'[Measure Choice] ) = "Net Margin",
+				    "0.0%",
+				    "£#,0"
+				)
+
+	/// The middle store of all 60 in that month, used as the comparison line on the Store Deep Dive
+	/// page.
+	measure 'Typical Store Profit' = MEDIANX ( VALUES ( 'Store'[store_id] ), [Net Profit] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Stores
+		lineageTag: 876c85f3-2953-4c7f-a5fc-384ff8c3ff63
+
+	measure 'Pence per £1' =
+			VAR Part = SELECTEDVALUE ( 'Pound Split'[Part] )
+			VAR Amount =
+			    SWITCH (
+			        Part,
+			        "Cost of goods", [Cost of Goods],
+			        "Staff", [Staff Cost],
+			        "Rent", [Rent],
+			        "Loyalty", [Loyalty Reward Cost],
+			        "Profit", [Net Profit]
+			    )
+			RETURN DIVIDE ( Amount, [Sales] ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: bb133438-924a-4d22-85cc-4deaf2c30b5b
+
+	/// The same pence split for all 60 stores, so a single store can be compared with the estate.
+	measure 'Estate Pence per £1' = CALCULATE ( [Pence per £1], REMOVEFILTERS ( 'Store' ) )
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Pence per £1
+		lineageTag: 630dfff5-8eae-4367-ad8e-d58585f59c5d
+
+	measure 'Pound Amount' =
+			VAR Part = SELECTEDVALUE ( 'Pound Split'[Part] )
+			RETURN
+			    SWITCH (
+			        Part,
+			        "Cost of goods", [Cost of Goods],
+			        "Staff", [Staff Cost],
+			        "Rent", [Rent],
+			        "Loyalty", [Loyalty Reward Cost],
+			        "Profit", [Net Profit]
+			    )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Pence per £1
+		lineageTag: 78e753da-eeba-478a-bc7c-93594d07d344
+
+	/// The year picked in the Year slicer, or the latest year when none is picked.
+	measure 'Selected Year' = MAX ( 'Date'[year] )
+		formatString: 0
+		displayFolder: Selected year
+		lineageTag: 18d68d56-53ca-4dee-9b48-c96a8e54b014
+
+	measure 'Year Sales' =
+			VAR y = [Selected Year]
+			RETURN CALCULATE ( [Sales], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: c9460520-4dc2-479e-8bc8-f0e32096a2d3
+
+	measure 'Year Net Profit' =
+			VAR y = [Selected Year]
+			RETURN CALCULATE ( [Net Profit], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: 4c8b9d3a-6662-4b48-8aa7-a098bf0ff94e
+
+	measure 'Year Rent' =
+			VAR y = [Selected Year]
+			RETURN CALCULATE ( [Rent], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: f3f4bd0e-cae6-424b-9726-dbf71f187ae3
+
+	measure 'Year Loyalty Reward Cost' =
+			VAR y = [Selected Year]
+			RETURN CALCULATE ( [Loyalty Reward Cost], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: 2888fdeb-dc29-42e2-8360-65dcc916024f
+
+	measure 'Year Store Count' =
+			VAR y = [Selected Year]
+			RETURN CALCULATE ( [Store Count], 'Date'[year] = y )
+		formatString: #,0
+		displayFolder: Selected year
+		lineageTag: 6e7561dd-d466-425d-93e0-bcb552162dbc
+
+	measure 'Prior Year Sales' =
+			VAR y = [Selected Year] - 1
+			RETURN CALCULATE ( [Sales], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: 49f57e10-c40a-42f4-8e05-ffc36b34ae9a
+
+	measure 'Prior Year Net Profit' =
+			VAR y = [Selected Year] - 1
+			RETURN CALCULATE ( [Net Profit], 'Date'[year] = y )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: 1021b765-502e-4a4b-b8ac-eb7d554f3fae
+
+	measure 'Year Net Margin' = DIVIDE ( [Year Net Profit], [Year Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Selected year
+		lineageTag: 6087e9a4-1ba6-473b-8402-ab61acf182e6
+
+	measure 'Prior Year Net Margin' = DIVIDE ( [Prior Year Net Profit], [Prior Year Sales] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Selected year
+		lineageTag: 37aa0d58-059b-485c-a143-372d328b9d3d
+
+	measure 'Year Profit per Store' = DIVIDE ( [Year Net Profit], [Year Store Count] )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: 5efb3527-1176-491b-acd6-8786c0adad92
+
+	measure 'Estate Year Net Margin' = CALCULATE ( [Year Net Margin], REMOVEFILTERS ( 'Store' ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Selected year
+		lineageTag: aa4f2b3d-ef9d-4082-84ed-54ad9830a160
+
+	measure 'Estate Year Profit per Store' = CALCULATE ( [Year Profit per Store], REMOVEFILTERS ( 'Store' ) )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Selected year
+		lineageTag: d299b0e9-7b02-4704-8cb0-e63476c800e3
+
+	/// Blank when the data has no earlier year to compare with.
+	measure 'Year Sales Change %' =
+			VAR Prior = [Prior Year Sales]
+			RETURN IF ( ISBLANK ( Prior ), BLANK (), DIVIDE ( [Year Sales] - Prior, Prior ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Selected year
+		lineageTag: f0ed4b66-8fb9-40a7-b9c7-4f93e3bc4ab1
+
+	/// Blank when the data has no earlier year to compare with.
+	measure 'Year Net Profit Change %' =
+			VAR Prior = [Prior Year Net Profit]
+			RETURN IF ( ISBLANK ( Prior ), BLANK (), DIVIDE ( [Year Net Profit] - Prior, Prior ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Selected year
+		lineageTag: 7ebd664e-1e46-4d11-9f46-732a2e3007b0
+
+	measure 'Year Margin Change pts' =
+			VAR Prior = [Prior Year Net Margin]
+			RETURN IF ( ISBLANK ( Prior ), BLANK (), ( [Year Net Margin] - Prior ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Selected year
+		lineageTag: d0733157-dc03-4424-8782-136994c17356
+
+	/// Average yearly profit of one store over the months in view.
+	measure 'Profit per Store per Year' = DIVIDE ( DIVIDE ( [Net Profit], [Store Count] ), DIVIDE ( DISTINCTCOUNT ( 'Monthly Profit'[month_id] ), 12 ) )
+		formatString: \£#,0;(\£#,0);\£#,0
+		displayFolder: Stores
+		lineageTag: f2a44c2b-b5c3-4c0c-b250-d259b2d5810a
+
+	measure 'Months in Profit per Store' = DIVIDE ( CALCULATE ( COUNTROWS ( 'Monthly Profit' ), 'Monthly Profit'[net_profit_gbp] > 0 ), [Store Count] )
+		formatString: #,0.0
+		displayFolder: Stores
+		lineageTag: 8a562788-7f10-4178-9c10-4204be12c819
+
+	/// Pence per £1 the price list implies, weighted by what each product line actually sells.
+	measure 'Price List Margin Weighted' =
+			VAR Espresso = SUM ( 'Daily Sales'[espresso_revenue_gbp] )
+			VAR FilterCoffee = SUM ( 'Daily Sales'[filter_revenue_gbp] )
+			VAR Food = SUM ( 'Daily Sales'[food_revenue_gbp] )
+			VAR Beans = SUM ( 'Daily Sales'[retail_beans_revenue_gbp] )
+			VAR Weighted =
+			    Espresso * LOOKUPVALUE ( 'Realised Margin'[price_list_margin], 'Realised Margin'[product_category], "Espresso-Drinks" )
+			        + FilterCoffee * LOOKUPVALUE ( 'Realised Margin'[price_list_margin], 'Realised Margin'[product_category], "Filter-Coffee" )
+			        + Food * LOOKUPVALUE ( 'Realised Margin'[price_list_margin], 'Realised Margin'[product_category], "Food" )
+			        + Beans * LOOKUPVALUE ( 'Realised Margin'[price_list_margin], 'Realised Margin'[product_category], "Retail-Beans" )
+			RETURN DIVIDE ( Weighted, Espresso + FilterCoffee + Food + Beans ) * 100
+		formatString: 0"p";-0"p";0"p"
+		displayFolder: Product
+		lineageTag: 48cebcef-d87e-4143-b5ab-86070233ccf1
+
+	/// Spend per visit for members, estimated by regression in the analysis repo (pooled). Does not
+	/// follow filters.
+	measure 'Member Spend per Visit (Analysis)' = 7.01
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		displayFolder: At stake
+		lineageTag: f30063de-a04a-4e0d-b0ef-a28a83e32047
+
+	/// Spend per visit for other customers, estimated by regression in the analysis repo (pooled). Does
+	/// not follow filters.
+	measure 'Other Spend per Visit (Analysis)' = 7.12
+		formatString: \£#,0.00;(\£#,0.00);\£#,0.00
+		displayFolder: At stake
+		lineageTag: 61dd81e0-5da8-4f95-a78b-7316aafcb49d
+
+	measure 'KPI Title Net Profit' = "Net Profit " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: 2b14be5b-a4b0-488c-9b60-8a222c7d486b
+
+	measure 'KPI Title Net Margin' = "Net Margin " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: 31a23ad7-ce63-4279-9c56-2c9a649e631f
+
+	measure 'KPI Title Sales' = "Sales " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: f49a43ea-d812-49c1-9b47-5bc1c337f713
+
+	measure 'KPI Title Profit per Store' = "Profit per Store " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: e79cb5e8-1650-47c5-a27e-058fabac6d1f
+
+	measure 'KPI Net Profit' =
+			VAR v = [Year Net Profit]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 56a9a29b-7840-41c1-921f-66968b0f6764
+
+	measure 'KPI Net Profit Note' =
+			VAR c = [Year Net Profit Change %]
+			RETURN
+			    IF (
+			        ISBLANK ( c ),
+			        "No earlier year in the data",
+			        IF ( c >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( c ), "0.0%" ) & " vs " & ( [Selected Year] - 1 ) & " · " & IF ( [Year Store Count] = 60, "All 60 stores", [Year Store Count] & " stores" )
+			    )
+		displayFolder: KPI cards
+		lineageTag: 1927cb4c-9969-4605-8ac5-e08c403b22ad
+
+	measure 'KPI Net Profit Colour' = IF ( ISBLANK ( [Year Net Profit Change %] ), "#7A6A5D", IF ( [Year Net Profit Change %] >= 0, "#3D8B67", "#B4442E" ) )
+		displayFolder: KPI cards
+		lineageTag: 2b865470-b0b0-473d-9123-aecc558d5f63
+
+	measure 'KPI Net Margin' = FORMAT ( [Year Net Margin], "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: 3c4c197b-8ef6-4f20-81cf-df7c4b98db9c
+
+	measure 'KPI Net Margin Note' =
+			VAR d = ROUND ( ( [Year Net Margin] - [Estate Year Net Margin] ) * 100, 1 )
+			RETURN
+			    IF ( d >= 0, "+", "−" ) & FORMAT ( ABS ( d ), "0.0" ) & " points vs whole estate "
+			        & FORMAT ( [Estate Year Net Margin], "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: 8a287dd5-7c94-4704-a11b-1154cc2bd18e
+
+	measure 'KPI Net Margin Colour' = IF ( ROUND ( [Year Net Margin] - [Estate Year Net Margin], 3 ) >= 0, "#3D8B67", "#B4442E" )
+		displayFolder: KPI cards
+		lineageTag: baf403d1-6ebe-4473-9eed-884da2dbaddc
+
+	measure 'KPI Sales' =
+			VAR v = [Year Sales]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 53d33090-fd8b-4ff2-a195-5bec800c2862
+
+	measure 'KPI Sales Note' =
+			VAR c = [Year Sales Change %]
+			RETURN
+			    IF (
+			        ISBLANK ( c ),
+			        "No earlier year in the data",
+			        IF ( c >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( c ), "0.0%" ) & " vs " & ( [Selected Year] - 1 )
+			    )
+		displayFolder: KPI cards
+		lineageTag: 5ea34f7e-b4e7-47e5-a95d-07d57ee83656
+
+	measure 'KPI Sales Colour' = IF ( ISBLANK ( [Year Sales Change %] ), "#7A6A5D", IF ( [Year Sales Change %] >= 0, "#3D8B67", "#B4442E" ) )
+		displayFolder: KPI cards
+		lineageTag: e2abedd3-03e0-4880-8bdb-05bff0803138
+
+	measure 'KPI Profit per Store' =
+			VAR v = [Year Profit per Store]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 0b008083-6ba9-4697-a2b9-5c67a19d3063
+
+	measure 'KPI Profit per Store Note' =
+			VAR Estate = [Estate Year Profit per Store]
+			VAR EstateText = "£" & FORMAT ( Estate / 1000, "0" ) & "k"
+			RETURN [Year Store Count] & " stores · estate " & EstateText & " per store"
+		displayFolder: KPI cards
+		lineageTag: f1e6fcf0-ad68-4f34-b37e-bd53c7796ba7
+
+	measure 'KPI Stores Over 10% Rent' = [Stores Over 10% Rent] & " of " & [Store Count]
+		displayFolder: KPI cards
+		lineageTag: 85372a86-f7ea-4c1c-aaa2-ee8fe4109a95
+
+	measure 'KPI Stores Over 10% Rent Note' = "Rent above the proposed cap for 2025 sites"
+		displayFolder: KPI cards
+		lineageTag: f3e8f324-43cd-4365-9391-f41d56867e12
+
+	/// Typical store margin in the cheapest-rent quarter of stores minus the dearest quarter.
+	measure 'KPI Margin Gap from Rent' = FORMAT ( ( CALCULATE ( [Typical Store Margin], REMOVEFILTERS ( 'Store'[Rent Level] ), 'Store'[Rent Level] = "1. Under 7% rent" ) - CALCULATE ( [Typical Store Margin], REMOVEFILTERS ( 'Store'[Rent Level] ), 'Store'[Rent Level] = "4. Over 13.4% rent" ) ) * 100, "0" ) & " points"
+		displayFolder: KPI cards
+		lineageTag: ba90747e-cbb2-4a8f-8a1a-20e82650f4fb
+
+	measure 'KPI Margin Gap from Rent Note' =
+			
+			"Cheapest rent "
+			    & FORMAT ( CALCULATE ( [Typical Store Margin], REMOVEFILTERS ( 'Store'[Rent Level] ), 'Store'[Rent Level] = "1. Under 7% rent" ), "0.0%" )
+			    & " · dearest "
+			    & FORMAT ( CALCULATE ( [Typical Store Margin], REMOVEFILTERS ( 'Store'[Rent Level] ), 'Store'[Rent Level] = "4. Over 13.4% rent" ), "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: 054b3abd-5b9c-4a4d-a82f-90a58dbd67a7
+
+	/// Average yearly profit of one London store.
+	measure 'KPI London Profit per Store' =
+			VAR v = CALCULATE ( [Profit per Store per Year], REMOVEFILTERS ( 'Store'[region] ), 'Store'[region] = "London" )
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 31642035-3ed6-4609-b2d8-bf2ec7eecb12
+
+	/// The 82% comes from the analysis repo (rent difference / profit difference).
+	measure 'KPI London Profit per Store Note' =
+			
+			VAR Elsewhere = CALCULATE ( [Profit per Store per Year], REMOVEFILTERS ( 'Store'[region] ), 'Store'[region] <> "London" )
+			RETURN "vs £" & FORMAT ( Elsewhere / 1000, "0" ) & "k outside London"
+		displayFolder: KPI cards
+		lineageTag: 8f2af132-3146-40a0-97f3-de61c4f5c670
+
+	measure 'KPI Stores to Review' = FORMAT ( [Stores to Review], "0" )
+		displayFolder: KPI cards
+		lineageTag: 41552269-26b3-49b4-bdcc-c1a6dfe9e2be
+
+	measure 'KPI Stores to Review Note' =
+			VAR London = CALCULATE ( [Stores to Review], 'Store'[region] = "London" )
+			VAR Losing = [Stores Losing Money]
+			VAR Worst = MINX ( VALUES ( 'Store'[store_id] ), [Net Profit 2024] )
+			RETURN
+			    London & " in London · " & Losing & " losing money"
+			        & IF ( Losing > 0, " (−£" & FORMAT ( ABS ( Worst ) / 1000, "0" ) & "k in 2024)" )
+		displayFolder: KPI cards
+		lineageTag: b5f2e133-2c14-498a-a81e-2ce56e1b23cb
+
+	measure 'KPI Title Loyalty Reward Cost' = "Loyalty Reward Cost " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: 656b8fb6-f825-47b9-b204-e463300f4b95
+
+	measure 'KPI Loyalty Reward Cost' =
+			VAR v = [Year Loyalty Reward Cost]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: c275c70e-118e-4f4d-851d-499f978c3bc4
+
+	measure 'KPI Loyalty Reward Cost Note' =
+			FORMAT ( DIVIDE ( [Year Loyalty Reward Cost], [Year Net Profit] ), "0%" ) & " of net profit · about £"
+			    & FORMAT ( DIVIDE ( [Year Loyalty Reward Cost], [Year Store Count] ) / 1000, "0" ) & "k per store"
+		displayFolder: KPI cards
+		lineageTag: d102b8e6-f155-43f3-8b06-aab8bd3a9c7e
+
+	measure 'KPI Member Spend per Visit' = FORMAT ( [Member Spend per Visit (Analysis)], "£0.00" )
+		displayFolder: KPI cards
+		lineageTag: 6cb43112-73bc-4588-b2fc-130735eea57d
+
+	measure 'KPI Member Spend per Visit Note' = FORMAT ( [Other Spend per Visit (Analysis)], "£0.00" ) & " for other customers: no extra spend"
+		displayFolder: KPI cards
+		lineageTag: eeeb0c66-94c2-4390-aa17-8f914ea27daa
+
+	measure 'KPI Weekend vs Weekdays' =
+			VAR w = [Weekend vs Weekday %]
+			RETURN IF ( w < 0, "−", "+" ) & FORMAT ( ABS ( w ), "0%" )
+		displayFolder: KPI cards
+		lineageTag: 48fc3793-8051-42f3-bba9-3d79f2e3691e
+
+	measure 'KPI Weekend vs Weekdays Note' = "Same staff hours · saving up to " & FORMAT ( [Weekend Staffing Opportunity] / 1000000, "£0.00" ) & "m a year"
+		displayFolder: KPI cards
+		lineageTag: bd4e52ff-d077-403c-a002-83bb6429f937
+
+	measure 'KPI Profit Kept per £1' = FORMAT ( [Profit Kept per £1], "0" ) & "p"
+		displayFolder: KPI cards
+		lineageTag: 2c0af431-7058-4cd0-b6fa-65452f773d81
+
+	measure 'KPI Profit Kept per £1 Note' = "Price list says " & FORMAT ( [Price List Margin Weighted], "0" ) & "p"
+		displayFolder: KPI cards
+		lineageTag: e97de1f9-7f6b-4d6f-9568-52798070ab84
+
+	measure 'KPI Store Net Margin' = FORMAT ( [Net Margin], "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: 61ee372c-b61d-4357-b7d2-a53fc45ddb70
+
+	measure 'KPI Store Net Margin Note' =
+			VAR d = ROUND ( [Margin vs Estate pts], 1 )
+			RETURN IF ( d >= 0, "+", "−" ) & FORMAT ( ABS ( d ), "0.0" ) & " points vs estate " & FORMAT ( [Estate Net Margin], "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: a01f3cc5-e53e-4b21-9c98-1f83a7531af1
+
+	measure 'KPI Store Net Margin Colour' = IF ( ROUND ( [Margin vs Estate pts], 1 ) >= 0, "#3D8B67", "#B4442E" )
+		displayFolder: KPI cards
+		lineageTag: 7a971426-c59a-4498-b233-94e65cfaba54
+
+	measure 'KPI Store Rent %' = FORMAT ( [Rent % of Sales], "0.0%" )
+		displayFolder: KPI cards
+		lineageTag: 94817b79-20e9-4216-bb8f-222a16a8ee71
+
+	measure 'KPI Store Rent % Note' = IF ( [Rent % of Sales] > 0.10, "Above the 10% cap for new sites", "Within the 10% cap for new sites" )
+		displayFolder: KPI cards
+		lineageTag: 83263b7b-57ad-4568-a452-9619a1bd2f10
+
+	measure 'KPI Store Rent % Colour' = IF ( [Rent % of Sales] <= 0.10, "#3D8B67", "#B4442E" )
+		displayFolder: KPI cards
+		lineageTag: bdf3c9ee-d55f-4459-bba1-72bdf509c259
+
+	measure 'KPI Store Loyalty Adoption' = FORMAT ( [Customers in Scheme], "0%" )
+		displayFolder: KPI cards
+		lineageTag: 0901101b-d006-40b1-8ecc-519b1dc03935
+
+	measure 'KPI Store Loyalty Adoption Note' = "Estate average " & FORMAT ( CALCULATE ( [Customers in Scheme], REMOVEFILTERS ( 'Store' ) ), "0%" )
+		displayFolder: KPI cards
+		lineageTag: c1c3ab4b-903a-4676-8a97-bb17b9ea80e5
+
+	measure 'KPI Store Months in Profit' = FORMAT ( [Months in Profit per Store], "0" ) & " of 24"
+		displayFolder: KPI cards
+		lineageTag: 7ea325f4-7a2a-4e3b-a275-9121196c45e1
+
+	measure 'KPI Store Months in Profit Note' = IF ( [Months in Profit per Store] >= 18, "Profitable most months", "Too many months below break-even" )
+		displayFolder: KPI cards
+		lineageTag: 5a11c73d-d14c-4697-9e6b-37098f1c11a8
+
+	measure 'KPI Store Months in Profit Colour' = IF ( [Months in Profit per Store] >= 18, "#3D8B67", "#B4442E" )
+		displayFolder: KPI cards
+		lineageTag: 0f8a812a-3382-492c-9001-e2d1fe9a7811
+
+	measure 'KPI Title Store Sales' = "Sales " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: ac1f4860-de58-46fa-b8de-9bd1548ddf8a
+
+	measure 'KPI Title Store Net Profit' = "Net Profit " & [Selected Year]
+		displayFolder: KPI cards
+		lineageTag: 1545376d-4155-4943-8b5b-238e9d622978
+
+	measure 'KPI Title Store Margin Change' = "Margin Change vs " & ( [Selected Year] - 1 )
+		displayFolder: KPI cards
+		lineageTag: f206b1b5-cebb-48bb-a4aa-0ee6fbb23412
+
+	measure 'KPI Store Sales' =
+			VAR v = [Year Sales]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 041255f2-9874-49a2-b90e-e57b3b4d8c18
+
+	measure 'KPI Store Net Profit' =
+			VAR v = [Year Net Profit]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: 7b701db6-9fd3-4c44-8e25-afd1ddae8ba4
+
+	measure 'KPI Store Net Profit Colour' = IF ( [Year Net Profit] < 0, "#B4442E", "#2B1E16" )
+		displayFolder: KPI cards
+		lineageTag: 299a1963-0588-415f-80ab-41393982b618
+
+	measure 'KPI Store Margin Change' =
+			VAR d = ROUND ( [Year Margin Change pts], 1 )
+			RETURN IF ( ISBLANK ( d ), "No earlier year", IF ( d >= 0, "+", "−" ) & FORMAT ( ABS ( d ), "0.0" ) & " points" )
+		displayFolder: KPI cards
+		lineageTag: 221d5c70-bd39-48dd-9765-b723e7fe41d3
+
+	measure 'KPI Store Margin Change Colour' = IF ( ISBLANK ( [Year Margin Change pts] ), "#7A6A5D", IF ( [Year Margin Change pts] >= 0, "#3D8B67", "#B4442E" ) )
+		displayFolder: KPI cards
+		lineageTag: 707b9e83-0abf-4b90-b286-ad07713ab6f1
+
+	measure 'KPI Store Rent per Year' =
+			VAR v = [Year Rent]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: f57de0c1-59d2-4b18-b3d4-ee3ca7fd21e3
+
+	measure 'KPI Store Reward Cost per Year' =
+			VAR v = [Year Loyalty Reward Cost]
+			RETURN
+			    IF ( v < 0, "−", "" )
+			        & IF (
+			            ABS ( v ) >= 1000000,
+			            "£" & FORMAT ( ABS ( v ) / 1000000, "0.00" ) & "m",
+			            "£" & FORMAT ( ABS ( v ) / 1000, "0" ) & "k"
+			        )
+		displayFolder: KPI cards
+		lineageTag: e254530b-a133-4df6-8e73-0c69879c4247
+
+	measure 'KPI Store Months Losing Money' = FORMAT ( [Months Losing Money per Store], "0" ) & " of 24"
+		displayFolder: KPI cards
+		lineageTag: cb0c8f19-76e2-40be-a35b-4cf0e7776b84
+
+	measure 'Site Pressure SVG' = ```
+			
+			VAR _yr = IF ( HASONEVALUE ( 'Date'[year] ), FORMAT ( VALUES ( 'Date'[year] ), "0" ), "2023–24" )
+			VAR _stores =
+			    
+			CALCULATETABLE ( VALUES ( 'Store'[store_id] ), 'Monthly Profit' )
+			VAR _total = COUNTROWS ( _stores ) + 0
+			VAR _rent = CALCULATE ( [Stores Over 10% Rent] )
+			VAR _margin = CALCULATE ( [Stores Under 8% Margin] )
+			VAR _months =
+			    
+			COUNTROWS (
+			        
+			FILTER (
+			            
+			_stores,
+			            
+			CALCULATE (
+			                
+			COUNTROWS ( 'Monthly Profit' ),
+			                
+			'Monthly Profit'[net_profit_margin_pct] < -0.02
+			            
+			) >= 6
+			        
+			)
+			    
+			) + 0
+			VAR _losingTbl =
+			    
+			FILTER ( _stores, CALCULATE ( [Net Profit] ) < 0 )
+			VAR _losing = COUNTROWS ( _losingTbl ) + 0
+			VAR _loserName =
+			    
+			IF (
+			        
+			_losing = 1,
+			        
+			CALCULATE ( MAX ( 'Store'[store_name] ), _losingTbl, REMOVEFILTERS ( 'Store' ) )
+			    
+			)
+			VAR _w = 412
+			VAR _w1 = IF ( _total > 0, ROUND ( _w * _rent / _total, 1 ), 0 )
+			VAR _w2 = IF ( _total > 0, ROUND ( _w * _margin / _total, 1 ), 0 )
+			VAR _w3 = IF ( _total > 0, ROUND ( _w * _months / _total, 1 ), 0 )
+			VAR _w4 = IF ( _total > 0, ROUND ( _w * _losing / _total, 1 ), 0 )
+			VAR _p1 = FORMAT ( DIVIDE ( _rent, _total, 0 ) * 100, "0" ) & "%25 of stores"
+			VAR _p2 = FORMAT ( DIVIDE ( _margin, _total, 0 ) * 100, "0" ) & "%25 of stores"
+			VAR _p3 = FORMAT ( DIVIDE ( _months, _total, 0 ) * 100, "0" ) & "%25 of stores"
+			VAR _p4 =
+			    
+			IF (
+			        
+			_losing = 1,
+			        
+			SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _loserName, "&", "&amp;" ), "<", "&lt;" ), "#", "%23" ),
+			        
+			FORMAT ( DIVIDE ( _losing, _total, 0 ) * 100, "0" ) & "%25 of stores"
+			    
+			)
+			VAR _font = "font-family='Segoe UI, Arial, sans-serif'"
+			VAR _row1 = 100
+			VAR _row2 = 175
+			VAR _row3 = 250
+			VAR _row4 = 325
+			VAR _svg =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='460' height='400' viewBox='0 0 460 400' " & _font & ">"
+			        
+			& "<rect x='0.5' y='0.5' width='459' height='399' rx='12' ry='12' fill='%23FFFFFF' stroke='%23E8E0D8' stroke-width='1'/>"
+			        
+			& "<text x='24' y='38' font-size='20' font-weight='700' fill='%232B1D14'>Site Pressure</text>"
+			        
+			& "<text x='24' y='60' font-size='13' font-style='italic' fill='%238A7F76'>Where rent is squeezing profit</text>"
+			        
+			-- Row 1
+			        
+			& "<text x='24' y='" & _row1 & "' font-size='14' font-weight='700' fill='%232B1D14'>Stores over 10%25 rent</text>"
+			        
+			& "<text x='436' y='" & _row1 & "' font-size='16' font-weight='700' fill='%232B1D14' text-anchor='end'>" & _rent & "</text>"
+			        
+			& "<rect x='24' y='" & _row1 + 12 & "' width='412' height='10' rx='5' fill='%23EFE4D8'/>"
+			        
+			& "<rect x='24' y='" & _row1 + 12 & "' width='" & _w1 & "' height='10' rx='5' fill='%23C4861E'/>"
+			        
+			& "<text x='24' y='" & _row1 + 42 & "' font-size='11' fill='%238A7F76'>Rent pressure</text>"
+			        
+			& "<text x='436' y='" & _row1 + 42 & "' font-size='11' fill='%238A7F76' text-anchor='end'>" & _p1 & "</text>"
+			        
+			-- Row 2
+			        
+			& "<text x='24' y='" & _row2 & "' font-size='14' font-weight='700' fill='%232B1D14'>Margin under 8%25</text>"
+			        
+			& "<text x='436' y='" & _row2 & "' font-size='16' font-weight='700' fill='%232B1D14' text-anchor='end'>" & _margin & "</text>"
+			        
+			& "<rect x='24' y='" & _row2 + 12 & "' width='412' height='10' rx='5' fill='%23EFE4D8'/>"
+			        
+			& "<rect x='24' y='" & _row2 + 12 & "' width='" & _w2 & "' height='10' rx='5' fill='%23B5432F'/>"
+			        
+			& "<text x='24' y='" & _row2 + 42 & "' font-size='11' fill='%238A7F76'>Profit pressure</text>"
+			        
+			& "<text x='436' y='" & _row2 + 42 & "' font-size='11' fill='%238A7F76' text-anchor='end'>" & _p2 & "</text>"
+			        
+			-- Row 3
+			        
+			& "<text x='24' y='" & _row3 & "' font-size='14' font-weight='700' fill='%232B1D14'>Lost money in 6+ months</text>"
+			        
+			& "<text x='436' y='" & _row3 & "' font-size='16' font-weight='700' fill='%232B1D14' text-anchor='end'>" & _months & "</text>"
+			        
+			& "<rect x='24' y='" & _row3 + 12 & "' width='412' height='10' rx='5' fill='%23EFE4D8'/>"
+			        
+			& "<rect x='24' y='" & _row3 + 12 & "' width='" & _w3 & "' height='10' rx='5' fill='%23C4861E'/>"
+			        
+			& "<text x='24' y='" & _row3 + 42 & "' font-size='11' fill='%238A7F76'>Consistency</text>"
+			        
+			& "<text x='436' y='" & _row3 + 42 & "' font-size='11' fill='%238A7F76' text-anchor='end'>" & _p3 & "</text>"
+			        
+			-- Row 4
+			        
+			& "<text x='24' y='" & _row4 & "' font-size='14' font-weight='700' fill='%232B1D14'>Losing money in " & _yr & "</text>"
+			        
+			& "<text x='436' y='" & _row4 & "' font-size='16' font-weight='700' fill='%232B1D14' text-anchor='end'>" & _losing & "</text>"
+			        
+			& "<rect x='24' y='" & _row4 + 12 & "' width='412' height='10' rx='5' fill='%23EFE4D8'/>"
+			        
+			& "<rect x='24' y='" & _row4 + 12 & "' width='" & _w4 & "' height='10' rx='5' fill='%23B5432F'/>"
+			        
+			& "<text x='24' y='" & _row4 + 42 & "' font-size='11' fill='%238A7F76'>Exit risk</text>"
+			        
+			& "<text x='436' y='" & _row4 + 42 & "' font-size='11' fill='%238A7F76' text-anchor='end'>" & _p4 & "</text>"
+			        
+			& "</svg>"
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & _svg
+			
+			```
+		lineageTag: 2d88fc9f-ad5a-47e6-81f4-e23f25d951f0
+		dataCategory: ImageUrl
+
+	measure 'Price Label' = FORMAT ( [Price List Margin], "0" ) & "p"
+		lineageTag: 5722eea6-74fd-4407-becf-e7a13a7529c5
+
+	measure 'Kept Label' = FORMAT ( [Realised Margin], "0" ) & "p"
+		lineageTag: cc8d7138-9ca8-47a9-b52d-7c32d3b018cb
+
+	measure 'Ring Net Margin' = ```
+			
+			VAR v = [Net Margin]
+			VAR fill = MIN ( 1, MAX ( 0, DIVIDE ( v, 0.30 ) ) )
+			VAR col =
+			    
+			SWITCH ( TRUE (), v >= 0.19, "%233D8B67", v >= 0.10, "%23C08419", "%23B4442E" )
+			VAR circ = 2 * PI () * 80
+			VAR dash = FORMAT ( fill * circ, "0.00" )
+			VAR txt = FORMAT ( v * 100, "0.0" ) & "%25"
+			VAR svg =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='%23EFE4D8' stroke-width='14'/>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='" & col & "' stroke-width='14' stroke-linecap='round'"
+			        
+			& " stroke-opacity='" & IF ( fill > 0, "1", "0" ) & "'"
+			        
+			& " stroke-dasharray='" & dash & " " & FORMAT ( circ, "0.00" ) & "' transform='rotate(-90 100 100)'/>"
+			        
+			& "<text x='100' y='100' text-anchor='middle' dominant-baseline='middle' font-family='Segoe UI' font-size='34' font-weight='bold' fill='%232B1E16'>" & txt & "</text>"
+			        
+			& "<text x='100' y='130' text-anchor='middle' font-family='Segoe UI' font-size='14' fill='%237A6A5D'>Net margin</text>"
+			        
+			& "</svg>"
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & svg
+			
+			```
+		lineageTag: aa1664a5-42fc-4469-a081-e974d2732be0
+		dataCategory: ImageUrl
+
+	measure 'Ring Rent' = ```
+			
+			VAR v = [Rent % of Sales]
+			VAR fill = MIN ( 1, MAX ( 0, DIVIDE ( v, 0.25 ) ) )
+			VAR col =
+			    
+			SWITCH ( TRUE (), v < 0.10, "%233D8B67", v < 0.15, "%23C08419", "%23B4442E" )
+			VAR circ = 2 * PI () * 80
+			VAR dash = FORMAT ( fill * circ, "0.00" )
+			VAR txt = FORMAT ( v * 100, "0.0" ) & "%25"
+			VAR svg =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='%23EFE4D8' stroke-width='14'/>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='" & col & "' stroke-width='14' stroke-linecap='round'"
+			        
+			& " stroke-opacity='" & IF ( fill > 0, "1", "0" ) & "'"
+			        
+			& " stroke-dasharray='" & dash & " " & FORMAT ( circ, "0.00" ) & "' transform='rotate(-90 100 100)'/>"
+			        
+			& "<text x='100' y='100' text-anchor='middle' dominant-baseline='middle' font-family='Segoe UI' font-size='34' font-weight='bold' fill='%232B1E16'>" & txt & "</text>"
+			        
+			& "<text x='100' y='130' text-anchor='middle' font-family='Segoe UI' font-size='14' fill='%237A6A5D'>Rent of sales</text>"
+			        
+			& "</svg>"
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & svg
+			```
+		lineageTag: acb81c39-4f5f-4848-9ea4-51b5eeb297ca
+		dataCategory: ImageUrl
+
+	measure 'Ring Loyalty' = ```
+			
+			VAR v = [Customers in Scheme]
+			VAR fill = MIN ( 1, MAX ( 0, v ) )
+			VAR col = "%236F4E37"
+			VAR circ = 2 * PI () * 80
+			VAR dash = FORMAT ( fill * circ, "0.00" )
+			VAR txt = FORMAT ( v * 100, "0" ) & "%25"
+			VAR svg =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='%23EFE4D8' stroke-width='14'/>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='" & col & "' stroke-width='14' stroke-linecap='round'"
+			        
+			& " stroke-opacity='" & IF ( fill > 0, "1", "0" ) & "'"
+			        
+			& " stroke-dasharray='" & dash & " " & FORMAT ( circ, "0.00" ) & "' transform='rotate(-90 100 100)'/>"
+			        
+			& "<text x='100' y='100' text-anchor='middle' dominant-baseline='middle' font-family='Segoe UI' font-size='34' font-weight='bold' fill='%232B1E16'>" & txt & "</text>"
+			        
+			& "<text x='100' y='130' text-anchor='middle' font-family='Segoe UI' font-size='14' fill='%237A6A5D'>Loyalty adoption</text>"
+			        
+			& "</svg>"
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & svg
+			```
+		lineageTag: 6fb56f6a-e1e2-43e4-b5c3-76e09abdfd3a
+		dataCategory: ImageUrl
+
+	measure 'Ring Months' = ```
+			
+			VAR m = [Months in Profit per Store]
+			VAR total = DIVIDE ( COUNTROWS ( 'Monthly Profit' ), [Store Count] )
+			VAR fill = MIN ( 1, MAX ( 0, DIVIDE ( m, total ) ) )
+			VAR col =
+			    
+			SWITCH ( TRUE (), m >= 18, "%233D8B67", m >= 12, "%23C08419", "%23B4442E" )
+			VAR circ = 2 * PI () * 80
+			VAR dash = FORMAT ( fill * circ, "0.00" )
+			VAR txt = FORMAT ( m, "0" ) & "/" & FORMAT ( total, "0" )
+			VAR svg =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='%23EFE4D8' stroke-width='14'/>"
+			        
+			& "<circle cx='100' cy='100' r='80' fill='none' stroke='" & col & "' stroke-width='14' stroke-linecap='round'"
+			        
+			& " stroke-opacity='" & IF ( fill > 0, "1", "0" ) & "'"
+			        
+			& " stroke-dasharray='" & dash & " " & FORMAT ( circ, "0.00" ) & "' transform='rotate(-90 100 100)'/>"
+			        
+			& "<text x='100' y='100' text-anchor='middle' dominant-baseline='middle' font-family='Segoe UI' font-size='34' font-weight='bold' fill='%232B1E16'>" & txt & "</text>"
+			        
+			& "<text x='100' y='130' text-anchor='middle' font-family='Segoe UI' font-size='14' fill='%237A6A5D'>Months in profit</text>"
+			        
+			& "</svg>"
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & svg
+			```
+		lineageTag: 336ad424-9531-4d00-9193-38396e9eeab9
+		dataCategory: ImageUrl
+
+	measure 'Store Profile SVG' = ```
+			
+			VAR _isone = HASONEVALUE ( 'Store'[store_name] )
+			VAR _rawname   = SELECTEDVALUE ( 'Store'[store_name], "Select a store" )
+			VAR _rawregion = SUBSTITUTE ( SELECTEDVALUE ( 'Store'[region], "-" ), "-", " " )
+			VAR _rawloc    = SUBSTITUTE ( SELECTEDVALUE ( 'Store'[location_type], "-" ), "-", " " )
+			VAR _rawcity   = SELECTEDVALUE ( 'Store'[city], "-" )
+			VAR _rawformat = SUBSTITUTE ( SELECTEDVALUE ( 'Store'[store_format], "-" ), "-", " " )
+			VAR _rawstatus = SELECTEDVALUE ( 'Store'[store_status], "-" )
+			VAR _rawrentl  = SELECTEDVALUE ( 'Store'[Rent Level], "-" )
+			VAR _rentclean = IF ( MID ( _rawrentl, 2, 2 ) = ". ", MID ( _rawrentl, 4, 100 ), _rawrentl )
+			VAR _staff     = SELECTEDVALUE ( 'Store'[staff_headcount] )
+			VAR _opened    = SELECTEDVALUE ( 'Store'[opening_year] )
+			VAR _seats     = SELECTEDVALUE ( 'Store'[seating_capacity] )
+			VAR _review    = SELECTEDVALUE ( 'Store'[Review Status], "-" )
+			VAR _onlist    = IF ( OR ( _review = "Review", _review = "Losing money" ), "Yes", "No" )
+			VAR _action    =
+			    
+			SWITCH ( _review,
+			        
+			"Losing money", "Consider exit or close",
+			        
+			"Review", "Review performance",
+			        
+			"Healthy", "Keep and grow",
+			        
+			"-" )
+			VAR _tname   = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawname,   "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tregion = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawregion, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tloc    = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawloc,    "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tcity   = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawcity,   "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tformat = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawformat, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tstatus = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rawstatus, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _trent   = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rentclean, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "%", "%25" ), "#", "%23" )
+			VAR _tstaff  = IF ( ISBLANK ( _staff ), "-", FORMAT ( _staff, "0" ) & " people" )
+			VAR _topened = IF ( ISBLANK ( _opened ), "-", FORMAT ( _opened, "0" ) )
+			VAR _tseats  = IF ( ISBLANK ( _seats ), "-", FORMAT ( _seats, "0" ) )
+			VAR _actlower = LOWER ( _action )
+			VAR _actbg  = IF ( CONTAINSSTRING ( _actlower, "exit" ) || CONTAINSSTRING ( _actlower, "close" ), "%23F6DCD6",
+			             
+			IF ( CONTAINSSTRING ( _actlower, "review" ), "%23F7EBD3", "%23DCEFE4" ) )
+			VAR _actfg  = IF ( _actbg = "%23F6DCD6", "%23B4442E", IF ( _actbg = "%23F7EBD3", "%23C08419", "%233D8B67" ) )
+			VAR _stbg   = IF ( _rawstatus = "Active", "%23DCEFE4", "%23F7EBD3" )
+			VAR _stfg   = IF ( _rawstatus = "Active", "%233D8B67", "%23C08419" )
+			VAR _rvbg   = IF ( _onlist = "Yes", "%23F7EBD3", "%23DCEFE4" )
+			VAR _rvfg   = IF ( _onlist = "Yes", "%23C08419", "%233D8B67" )
+			VAR _lx = 18
+			VAR _rx = 226
+			VAR _w  = 190
+			VAR _y0 = 78
+			VAR _p  = 44
+			VAR _labelsty = " font-size='10' fill='%237A6A5D' letter-spacing='0.6'>"
+			VAR _valsty   = " font-size='13' font-weight='700' fill='%232B1E16'>"
+			VAR _leftrows =
+			    
+			"<text x='" & _lx & "' y='" & _y0 & "'" & _labelsty & "STORE</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 18 & "'" & _valsty & _tname & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + 28 & "' y2='" & _y0 + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + _p & "'" & _labelsty & "REGION</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + _p + 18 & "'" & _valsty & _tregion & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + _p + 28 & "' y2='" & _y0 + _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 2 * _p & "'" & _labelsty & "LOCATION TYPE</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 2 * _p + 18 & "'" & _valsty & _tloc & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + 2 * _p + 28 & "' y2='" & _y0 + 2 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 3 * _p & "'" & _labelsty & "CITY</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 3 * _p + 18 & "'" & _valsty & _tcity & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + 3 * _p + 28 & "' y2='" & _y0 + 3 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 4 * _p & "'" & _labelsty & "STAFF</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 4 * _p + 18 & "'" & _valsty & _tstaff & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + 4 * _p + 28 & "' y2='" & _y0 + 4 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 5 * _p & "'" & _labelsty & "RENT LEVEL</text>"
+			    
+			& "<text x='" & _lx & "' y='" & _y0 + 5 * _p + 18 & "'" & _valsty & _trent & "</text>"
+			    
+			& "<line x1='" & _lx & "' x2='" & _lx + _w & "' y1='" & _y0 + 5 * _p + 28 & "' y2='" & _y0 + 5 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			VAR _pilla = "<rect x='" & _rx & "' y='" & _y0 + 5 & "' width='" & 7 * LEN ( _action ) + 16 & "' height='19' rx='9' fill='" & _actbg & "'/>"
+			    
+			& "<text x='" & _rx + 8 & "' y='" & _y0 + 18 & "' font-size='12' font-weight='700' fill='" & _actfg & "'>" & _action & "</text>"
+			VAR _pills = "<rect x='" & _rx & "' y='" & _y0 + _p + 5 & "' width='" & 7 * LEN ( _rawstatus ) + 16 & "' height='19' rx='9' fill='" & _stbg & "'/>"
+			    
+			& "<text x='" & _rx + 8 & "' y='" & _y0 + _p + 18 & "' font-size='12' font-weight='700' fill='" & _stfg & "'>" & _tstatus & "</text>"
+			VAR _pillr = "<rect x='" & _rx & "' y='" & _y0 + 5 * _p + 5 & "' width='" & 7 * LEN ( _onlist ) + 16 & "' height='19' rx='9' fill='" & _rvbg & "'/>"
+			    
+			& "<text x='" & _rx + 8 & "' y='" & _y0 + 5 * _p + 18 & "' font-size='12' font-weight='700' fill='" & _rvfg & "'>" & _onlist & "</text>"
+			VAR _rightrows =
+			    
+			"<text x='" & _rx & "' y='" & _y0 & "'" & _labelsty & "RECOMMENDED ACTION</text>" & _pilla
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + 28 & "' y2='" & _y0 + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + _p & "'" & _labelsty & "STATUS</text>" & _pills
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + _p + 28 & "' y2='" & _y0 + _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 2 * _p & "'" & _labelsty & "FORMAT</text>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 2 * _p + 18 & "'" & _valsty & _tformat & "</text>"
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + 2 * _p + 28 & "' y2='" & _y0 + 2 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 3 * _p & "'" & _labelsty & "OPENED</text>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 3 * _p + 18 & "'" & _valsty & _topened & "</text>"
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + 3 * _p + 28 & "' y2='" & _y0 + 3 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 4 * _p & "'" & _labelsty & "SEATS</text>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 4 * _p + 18 & "'" & _valsty & _tseats & "</text>"
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + 4 * _p + 28 & "' y2='" & _y0 + 4 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			    
+			& "<text x='" & _rx & "' y='" & _y0 + 5 * _p & "'" & _labelsty & "REVIEW LIST</text>" & _pillr
+			    
+			& "<line x1='" & _rx & "' x2='" & _rx + _w & "' y1='" & _y0 + 5 * _p + 28 & "' y2='" & _y0 + 5 * _p + 28 & "' stroke='%23EFE4D8'/>"
+			VAR _header =
+			    
+			"<svg xmlns='http://www.w3.org/2000/svg' width='440' height='390' viewBox='0 0 440 390' font-family='Segoe UI, sans-serif'>"
+			    
+			& "<rect x='0.5' y='0.5' width='439' height='389' rx='12' fill='%23FFFFFF' stroke='%23E8E0D8'/>"
+			    
+			& "<text x='18' y='30' font-size='15' font-weight='700' fill='%232B1E16' letter-spacing='0.5'>STORE PROFILE</text>"
+			    
+			& "<text x='18' y='48' font-size='12' fill='%237A6A5D'>Key store information</text>"
+			VAR _body =
+			    
+			IF ( _isone, _leftrows & _rightrows,
+			        
+			"<text x='220' y='200' font-size='14' font-weight='700' fill='%237A6A5D' text-anchor='middle'>Select a store</text>" )
+			RETURN
+			    
+			"data:image/svg+xml;utf8," & _header & _body & "</svg>"
+			```
+		lineageTag: f412498d-a05b-4b3d-93e6-6bb556ce6ec9
+		dataCategory: ImageUrl
+
+	measure 'Typical Store Selected' =
+			
+			CALCULATE (
+			    MEDIANX ( VALUES ( 'Store'[store_id] ), [Selected Measure] ),
+			    REMOVEFILTERS ( 'Store' )
+			)
+		lineageTag: 0308a2ba-80c0-4cb9-b9c2-67504228db09
+
+		formatStringDefinition = IF ( SELECTEDVALUE ( 'Measure Choice'[Measure Choice] ) = "Net Margin", "0.0%", "£#,0" )
+
+	measure 'Weekday Sales' = IF ( MAX ( 'Date'[Day Number] ) <= 5, [Sales Index vs Average Day] )
+		lineageTag: 2e30bca0-b093-4f76-8795-91762b9283f1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weekend Sales' = IF ( MAX ( 'Date'[Day Number] ) >= 6, [Sales Index vs Average Day] )
+		lineageTag: 0369612f-fbda-4242-b260-e715f5dd22eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Note vs 2023' =
+			
+			VAR Diff = ( [Net Margin 2024] - [Net Margin 2023] ) * 100
+			RETURN
+			    IF ( Diff >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( Diff ), "0.0" ) & " points vs 2023"
+		lineageTag: 7d0c6caa-2b5e-453e-8914-1f90d1974c61
+
+	measure 'Margin Note Colour' = IF ( [Net Margin 2024] >= [Net Margin 2023], "#3D8B67", "#B4442E" )
+		lineageTag: ee4d9fed-e635-415d-84fe-da55fe4f4ce4
+
+	column 'Measures Placeholder'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8daaa2ff-964d-4c44-bf2e-2636e63d6173
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition 'Key Measures' = calculated
+		mode: import
+		source = ROW ( "Value", 1 )
+

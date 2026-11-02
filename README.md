@@ -2,8 +2,8 @@
 
 **Bottom line:** London is the one weak region. Its stores sell about as much as the typical store but pay roughly twice the rent share (about 20% of revenue against 9%), so they keep less than half the margin. The loyalty scheme costs **£0.86m a year** in rewards with no visible extra spend from members. Weekend sales run about a quarter below weekdays while staff hours stay flat, which is worth up to **£0.97m a year**.
 
-<!-- Add links here once exported: docs/SunriseCoffee-report.pdf and screenshots/walkthrough.gif -->
-No Power BI Desktop? A PDF export of the report and a short walkthrough recording are coming soon. Until then, the screenshots below show every page.
+No Power BI Desktop? **[Read the full report as a PDF](docs/SunriseCoffee-report.pdf)** (4 pages), or browse the screenshots below.
+<!-- Add a walkthrough GIF link here once recorded: screenshots/walkthrough.gif -->
 
 ![Overview](screenshots/01-overview.png)
 
@@ -60,7 +60,7 @@ A synced Year slicer (single select, default 2024) drives every page.
 ```
 powerbi/       the Power BI project (.pbip, Report and SemanticModel folders)
 data/          the five challenge CSVs, plus analysis_realised_margin.csv used by the model
-docs/          the challenge brief and data dictionary
+docs/          the report as a PDF, the challenge brief and the data dictionary
 analysis/      Python analysis that produced the numbers above (see analysis/README.md)
 screenshots/   page images used in this README
 ```

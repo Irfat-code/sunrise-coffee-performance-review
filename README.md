@@ -1,10 +1,13 @@
 # Sunrise Coffee: store performance review (2023-2024)
 
-A Power BI report on store profitability, loyalty ROI and labour for a 60-store UK coffee chain, built for the **DataDNA Dataset Challenge (October 2026)**.
+**Bottom line:** London is the one weak region. Its stores sell about as much as the typical store but pay roughly twice the rent share (about 20% of revenue against 9%), so they keep less than half the margin. The loyalty scheme costs **£0.86m a year** in rewards with no visible extra spend from members. Weekend sales run about a quarter below weekdays while staff hours stay flat, which is worth up to **£0.97m a year**.
 
-The brief casts me as a senior commercial analyst reporting to the Chief Commercial Officer. Rather than build "a dashboard", the report is organised around the three decisions the CCO has to make before the 2025 planning cycle, and each page answers one of them.
+<!-- Add links here once exported: docs/SunriseCoffee-report.pdf and screenshots/walkthrough.gif -->
+No Power BI Desktop? A PDF export of the report and a short walkthrough recording are coming soon. Until then, the screenshots below show every page.
 
 ![Overview](screenshots/01-overview.png)
+
+A Power BI report on store profitability, loyalty ROI and labour for a 60-store UK coffee chain, built for the DataDNA Dataset Challenge (October 2026). The brief casts me as a senior commercial analyst reporting to the Chief Commercial Officer. Rather than build "a dashboard", the report is organised around the three decisions the CCO has to make before the 2025 planning cycle.
 
 ## The three decisions and what the data says
 
@@ -42,15 +45,6 @@ A synced Year slicer (single select, default 2024) drives every page.
 |---|---|---|
 | ![Rent & Sites](screenshots/02-rent-and-sites.png) | ![Loyalty & Ops](screenshots/03-loyalty-and-ops.png) | ![Store Deep Dive](screenshots/04-store-deep-dive.png) |
 
-## How to open it
-
-The report is saved as a **Power BI project (.pbip)**, so the model (TMDL) and report (PBIR) are plain text and diff cleanly in Git.
-
-1. Clone or download this repo, for example to `C:\SunriseCoffee`.
-2. In Power BI Desktop, make sure the project format is on: `File > Options and settings > Options > Preview features`, tick **Store semantic model using TMDL format** and **Store reports using enhanced metadata format (PBIR)**, then restart.
-3. Open `powerbi/SunriseCoffee.pbip`.
-4. Point it at the data: `Home > Transform data > Manage parameters`, set **DataFolder** to the repo's `data` folder with a trailing slash, for example `C:\SunriseCoffee\data\`. Then `Home > Refresh`.
-
 ## Repo layout
 
 ```
@@ -70,6 +64,15 @@ The data has several quirks that change how it has to be used. The full list, wi
 - **Only two formats exist.** The brief mentions three, but the data has 58 High-Street stores, 2 Transport-Hub stores (both Luton) and no Retail-Park stores, so format comparisons are flagged as small samples.
 - **Non-active stores still trade.** The three Temporarily-Closed or Refurbishing stores report revenue in all 24 months.
 - Medians are shown beside means, and any group with fewer than 5 stores or 30 rows is flagged as a small sample.
+
+## How to open it
+
+The report is saved as a **Power BI project (.pbip)**, so the model (TMDL) and report (PBIR) are plain text and diff cleanly in Git.
+
+1. Clone or download this repo, for example to `C:\SunriseCoffee`.
+2. In Power BI Desktop, make sure the project format is on: `File > Options and settings > Options > Preview features`, tick **Store semantic model using TMDL format** and **Store reports using enhanced metadata format (PBIR)**, then restart.
+3. Open `powerbi/SunriseCoffee.pbip`.
+4. Point it at the data: `Home > Transform data > Manage parameters`, set **DataFolder** to the repo's `data` folder with a trailing slash, for example `C:\SunriseCoffee\data\`. Then `Home > Refresh`.
 
 ## Credits
 

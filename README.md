@@ -16,20 +16,21 @@ All figures come from [analysis/outputs/findings.md](analysis/outputs/findings.m
 ### 1. Which stores or regions to review or close, and where to expand in 2025
 
 - London is the one weak region. Its stores earn a median 8.7% net margin over the two years, against 19.2% for the typical store. Rent takes about 20% of London revenue, more than double the estate median of about 9%. If London earned the estate median margin it would make roughly £0.56m a year more.
-- Rent does not buy revenue. Across stores, rent and revenue are barely related (r = 0.15), but higher rent cuts margin (r = -0.42). Stores in the cheapest rent quarter earn a median 23.5% margin, against 16.5% in the dearest quarter.
+- Rent does not buy revenue. Across stores, rent and revenue are barely related (r = 0.15), but higher rent cuts margin (r = -0.42). The Margin by Rent Level chart splits stores into four groups of 15 by rent as a share of sales and shows the typical (median) store in each. Over both years, the typical store earns 19-24% until rent passes about 13% of sales, then drops to 16.5% in the dearest group. 2024 on its own is flatter (17-21%).
+- The report's 10% rent cap for new sites is deliberately cautious. Stores paying 10-13% of sales in rent still earn a median 17.7% over the two years, close to the 19.2% estate median, so 10% is a safe limit rather than the point where margins break.
 - Outside London, regions are not meaningfully different (p = 0.21), so 2025 site selection should screen on rent as a share of expected revenue rather than on region.
 - The report flags 8 stores for review, 5 of them in London. A store is flagged if it lost money in 2024, or its two-year margin is below 8%, or it had 6 or more months with a margin below -2%, or its margin fell by 5 points or more into 2024 and ended below 8%. Only one store, South London Corner, lost money over the full 24 months (-3.7%).
 
 ### 2. Does the loyalty programme earn its redemption cost?
 
 - Not on this evidence. Rewards cost about £0.86m a year (£863k in 2024), which is about 10% of net profit.
-- Members spend the same per customer as non-members. Their share of revenue matches their share of customers almost exactly (spend index 0.997, where 1.0 means no difference). Stores with higher take-up earn no more revenue or margin.
-- Per-visit evidence is mixed. Direct comparisons in the daily sample show no member premium (£7.01 per member visit against £7.12 for other customers), but one indirect estimate from a separate analysis suggested members spend about 8% more per visit.
-- To break even, members would have to spend about 10% more than they otherwise would. Nothing in the data shows that uplift reliably, so I would hold further investment until a controlled test shows one.
+- There's no extra member spend in this data. Members spend the same per customer as non-members. Their share of revenue matches their share of customers almost exactly (spend index 0.997, where 1.0 means no difference). Stores with higher take-up earn no more revenue or margin.
+- Per visit it is the same story: £7.01 for members against £7.12 for other customers. These figures come from regressing each day's store revenue on its member and non-member transaction counts across the daily sample. Comparing within each store gives £5.10 against £5.32.
+- To break even, members would have to spend about 10% more than they otherwise would. Nothing in the data shows that uplift, so I would hold further investment until a controlled test shows one.
 
 ### 3. Which products to grow, and how to staff for seasonality
 
-- The mix is flat. Espresso is about 46% of sales, food 26%, filter 19% and beans 9%, with no significant shift between 2023 and 2024. Catalogue margins differ by category, but the margin actually realised is 62-63% in every stream, so there is no mix lever to pull.
+- The mix is flat. Espresso is about 46% of sales, food 26%, filter 19% and beans 9%, with no significant shift between 2023 and 2024. Catalogue margins differ by category, but the margin actually realised is 62-63% in every stream, so there is no mix lever to pull. This is gross profit (after ingredients, before staff and rent), which is why the report's Profit Kept per £1 reads about 63p while the net margin is 18.8%.
 - Weekends are the staffing opportunity. Saturday and Sunday sales run about a quarter below weekdays, but staff hours stay flat. Matching weekend hours to weekday productivity is worth up to roughly £0.97m a year. That is an upper bound, because hours are not costed in the data.
 - There is no repeatable monthly seasonality. 2023 and 2024 monthly patterns do not line up, so rotas should be planned by day of week, not by month.
 

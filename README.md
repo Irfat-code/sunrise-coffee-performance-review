@@ -87,3 +87,7 @@ The report is saved as a Power BI project (.pbip), so the model (TMDL) and repor
 ## Credits
 
 Dataset: DataDNA Dataset Challenge, October 2026 (Sunrise Coffee Chain). The brief and data dictionary are included in `docs/` for reference. Sunrise Coffee is a fictional company.
+
+## Licence
+
+The code, Power BI project and write-up are released under the [MIT licence](LICENSE). The dataset and challenge documents belong to the DataDNA Dataset Challenge and are covered by its own terms, not by the MIT licence.

@@ -1,9 +1,9 @@
 # Sunrise Coffee: store performance review (2023-2024)
 
+**[View the live interactive report](https://app.powerbi.com/view?r=eyJrIjoiODBkNDIwYTUtYjg0Mi00MWMyLWJmZGMtNjc4MzQyZjFkZDRiIiwidCI6IjQ3NzFkZTJmLWRjNzYtNGE2Mi04OTkzLWFjNTllODJmODE4YSJ9)** · [Read it as a PDF](docs/SunriseCoffee-report.pdf) (no Power BI needed for either)
+
 **Bottom line:** London is the one weak region. Its stores sell about as much as the typical store but pay roughly twice the rent share (about 20% of revenue against 9%), so they keep less than half the margin. The loyalty scheme costs **£0.86m a year** in rewards with no visible extra spend from members. Weekend sales run about a quarter below weekdays while staff hours stay flat, which is worth up to **£0.97m a year**.
 
-No Power BI Desktop? **[Read the full report as a PDF](docs/SunriseCoffee-report.pdf)** (4 pages), or browse the screenshots below.
-<!-- Add a walkthrough GIF link here once recorded: screenshots/walkthrough.gif -->
 
 ![Overview](screenshots/01-overview.png)
 
